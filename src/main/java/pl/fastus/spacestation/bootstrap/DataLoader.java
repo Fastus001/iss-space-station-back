@@ -29,7 +29,7 @@ public class DataLoader implements CommandLineRunner {
 
         int size = issNowService.findAll().size();
         if ( size == 0 ) {
-            loadData();
+//            loadData();
         }
 
     }
@@ -38,14 +38,14 @@ public class DataLoader implements CommandLineRunner {
 
         Request request = new Request.Builder().url(ISS_NOW_URL).build();
         OkHttpClient client = new OkHttpClient();
-
-        while (true) {
+        int counter = 10;
+        while (counter-->0) {
             try (Response response = client.newCall( request ).execute()) {
                 issNowService.save( createIssNow( response ) );
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Thread.sleep( 5000 );
+            Thread.sleep( 1000 );
         }
     }
 
