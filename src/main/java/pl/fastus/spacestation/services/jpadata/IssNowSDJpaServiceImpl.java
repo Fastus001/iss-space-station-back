@@ -10,12 +10,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
-public class IssNowSDJpaImpl implements IssNowService {
+public class IssNowSDJpaServiceImpl implements IssNowService {
 
     private final IssNowRepository issNowRepository;
     private final IssPositionRepository issPositionRepository;
 
-    public IssNowSDJpaImpl(IssNowRepository issNowRepository, IssPositionRepository issPositionRepository) {
+    public IssNowSDJpaServiceImpl(IssNowRepository issNowRepository, IssPositionRepository issPositionRepository) {
         this.issNowRepository = issNowRepository;
         this.issPositionRepository = issPositionRepository;
     }
