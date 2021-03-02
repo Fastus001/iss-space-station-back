@@ -13,11 +13,9 @@ import java.util.Set;
 public class IssNowSDJpaServiceImpl implements IssNowService {
 
     private final IssNowRepository issNowRepository;
-    private final IssPositionRepository issPositionRepository;
 
-    public IssNowSDJpaServiceImpl(IssNowRepository issNowRepository, IssPositionRepository issPositionRepository) {
+    public IssNowSDJpaServiceImpl(IssNowRepository issNowRepository) {
         this.issNowRepository = issNowRepository;
-        this.issPositionRepository = issPositionRepository;
     }
 
     @Override
