@@ -1,45 +1,64 @@
 package pl.fastus.spacestation.bootstrap;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import pl.fastus.spacestation.domain.IssNow;
 import pl.fastus.spacestation.domain.IssPosition;
 import pl.fastus.spacestation.services.IssNowService;
-import pl.fastus.spacestation.services.IssPositionService;
+
+import java.io.IOException;
+import java.util.Objects;
 
 @Component
 public class DataLoader implements CommandLineRunner {
+    private static final String ISS_NOW_URL = "http://api.open-notify.org/iss-now.json";
 
     private final IssNowService issNowService;
-    private final IssPositionService issPositionService;
 
-    public DataLoader(IssNowService issNowService, IssPositionService issPositionService) {
+    public DataLoader(IssNowService issNowService) {
         this.issNowService = issNowService;
-        this.issPositionService = issPositionService;
     }
 
     @Override
     public void run(String... args) throws Exception {
 
         int size = issNowService.findAll().size();
-        if(size ==0){
+        if ( size == 0 ) {
             loadData();
         }
 
     }
 
-    private void loadData() {
-        IssPosition position = IssPosition.builder()
-                .longitude( 12.25 )
-                .latitude( -12.45 ).build();
+    private void loadData() throws InterruptedException {
 
-        IssNow first = IssNow.builder()
-                .issPosition( position )
-                .timeStamp( 123456L ).build();
+        Request request = new Request.Builder().url(ISS_NOW_URL).build();
+        OkHttpClient client = new OkHttpClient();
 
-        issNowService.save( first );
+        while (true) {
+            try (Response response = client.newCall( request ).execute()) {
+                issNowService.save( createIssNow( response ) );
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Thread.sleep( 5000 );
+        }
+    }
 
+    private IssNow createIssNow(Response response) throws IOException {
+        Gson gson = new Gson();
+        var json = gson.fromJson( Objects.requireNonNull( response.body() ).string(), JsonObject.class );
 
+        IssPosition issPosition = gson.fromJson( json.get( "iss_position" ), IssPosition.class );
 
+        return IssNow.builder()
+                .timeStamp( json.get( "timestamp" )
+                                .getAsLong() )
+                .issPosition( issPosition )
+                .build();
     }
 }

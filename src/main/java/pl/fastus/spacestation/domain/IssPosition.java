@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 @NoArgsConstructor
 @Builder
 @EqualsAndHashCode(exclude = "issNow")
+@ToString(exclude = "issNow")
 @Entity
 public class IssPosition {
 
