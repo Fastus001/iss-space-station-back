@@ -1,10 +1,10 @@
-package pl.fastus.issspacestationlocalizer;
+package pl.fastus.spacestation;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class IssSpaceStationLocalizerApplicationTests {
+class SpaceStationLocalizerApplicationTests {
 
 	@Test
 	void contextLoads() {
