@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>ISS Location on map</title>
@@ -13,14 +13,20 @@
             crossorigin=""></script>
 
 </head>
-<body>
+<body th:object=${issNow}>
 fly.....
 <div id="mapid" style="width: 800px; height: 600px; position: relative;"
      class="leaflet-container leaflet-touch leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom"
      tabindex="0">
 </div>
-<script>
-	var mymap = L.map('mapid').setView([10, -0.09], 2);
+<div th:text = "${issNow.getIssPosition().latitude}">Text</div>
+<script th:inline = "javascript">
+/*<![CDATA[*/
+
+    var longitude = /*[[${issNow.getIssPosition().longitude}]]*/;
+    var latitude = /*[[${issNow.getIssPosition().latitude}]]*/;
+
+	var mymap = L.map('mapid').setView([ latitude,longitude], 2);
 
 	L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
 		maxZoom: 18,
@@ -32,12 +38,13 @@ fly.....
 	}).addTo(mymap);
 
 
-	L.circle([51.508, -0.11], {
+	L.circle([latitude,longitude], {
 		color: 'red',
 		fillColor: '#f03',
 		fillOpacity: 0.5,
-		radius: 500
+		radius: 1500
 	}).addTo(mymap);
+	/*]]>*/
 </script>
 </body>
 </html>
