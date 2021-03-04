@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -14,7 +14,55 @@
 
 </head>
 <body style="background-image: url('../resources/images/wallpaper.jpg')">
+<div class="container-fluid" style="margin-top: 20px">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <form th:object = "${passTimes}" th:action = "@{/passTimes/}" method="post">
+                <div class="panel-group">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h1 class="panel-title">Insert coordinates</h1>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-3 form-group">
+                                    <label >Latitude</label>
+                                    <input type="text" class="form-control" th:field="*{latitude}" />
+                                </div>
 
+                                <div class="col-md-3 form-group">
+                                    <label >Longitude</label>
+                                    <input type="text" class="form-control" th:field="*{longitude}" />
+                                </div>
+
+                                <div class="col-md-3 form-group">
+                                    <label >Altitude</label>
+                                    <input type="text" class="form-control" th:field="*{altitude}" />
+                                </div>
+
+                                <div class="col-md-3 form-group">
+                                    <label >Number of passes</label>
+                                    <input type="text" class="form-control" th:field="*{numberOfPasses}" />
+                                </div>
+                            </div>
+                            <div class="row">
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 form-group">
+                                    <button type="submit" class="btn btn-outline-success me-2">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</div>
 
 </body>
 </html>
