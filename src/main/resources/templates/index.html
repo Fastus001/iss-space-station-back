@@ -1,19 +1,24 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <title>Iss Space Station Localizer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+
+    <script type="text/javascript" th:src="@{/js/location.js}"></script>
+
 </head>
-<body>
-    <header>
-        <nav>
-            Tutaj będzie nav bar
-        </nav>
-    </header>
-    <main>
-        a tutaj main
-        <a href="#" th:href="@{'/iss/show'}">Show ISS Location</a>
-    </main>
+<body style="background-image: url('../resources/images/wallpaper.jpg')">
+<div class="strong">
+    <a th:href="@{'/iss/show'}" class="has-bg-img btn btn-outline-success me-2">Show ISS Location</a>
+</div>
 
 </body>
 </html>
