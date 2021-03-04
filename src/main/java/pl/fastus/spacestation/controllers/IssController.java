@@ -2,6 +2,8 @@ package pl.fastus.spacestation.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.fastus.spacestation.commands.PassTimesCommand;
 import pl.fastus.spacestation.domain.IssNow;
@@ -30,6 +32,14 @@ public class IssController {
     public String passTimes(Model model){
         model.addAttribute( "passTimes", new PassTimesCommand() );
         return "iss/passtimesform";
+    }
+
+    @PostMapping("passTimes")
+    public String showPassTimes(@ModelAttribute("passTimes") PassTimesCommand command){
+        System.out.println( "command = " + command );
+
+
+        return "iss/showPassTimes";
     }
 
 
