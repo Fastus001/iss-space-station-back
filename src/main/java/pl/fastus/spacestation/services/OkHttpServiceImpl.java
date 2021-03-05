@@ -7,10 +7,10 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.springframework.stereotype.Service;
-import pl.fastus.spacestation.domain.IssNow;
-import pl.fastus.spacestation.domain.IssPasses;
-import pl.fastus.spacestation.domain.IssPassesRequest;
-import pl.fastus.spacestation.domain.IssPosition;
+import org.springframework.web.client.RestTemplate;
+import pl.fastus.spacestation.converters.RequestToIssPassesRequestConverter;
+import pl.fastus.spacestation.converters.ResponseToIssPassesConverter;
+import pl.fastus.spacestation.domain.*;
 import pl.fastus.spacestation.json.RequestJSON;
 import pl.fastus.spacestation.json.ResponseJSON;
 
@@ -27,6 +27,17 @@ public class OkHttpServiceImpl implements OkHttpService{
 
     private final OkHttpClient client = new OkHttpClient();
 
+    private RestTemplate restTemplate;
+
+    private RequestToIssPassesRequestConverter requestConverter;
+    private ResponseToIssPassesConverter responseConverter;
+
+    public OkHttpServiceImpl(RestTemplate restTemplate, RequestToIssPassesRequestConverter requestConverter,
+                             ResponseToIssPassesConverter responseConverter) {
+        this.restTemplate = restTemplate;
+        this.requestConverter = requestConverter;
+        this.responseConverter = responseConverter;
+    }
 
     @Override
     public IssNow getIssNow() {
@@ -53,47 +64,13 @@ public class OkHttpServiceImpl implements OkHttpService{
     }
 
     public IssPassesRequest createIssPassesRequest(String urlPart){
-        String url = "http://api.open-notify.org/iss-pass.json"+urlPart;
-        Request request = new Request.Builder().url( url).build();
+        final Example template = restTemplate.getForObject("http://api.open-notify.org/iss-pass.json" + urlPart,
+                Example.class);
 
-        try (Response response = client.newCall( request ).execute()) {
-            return createIssPassesRequest(response);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+        final IssPassesRequest request1 = requestConverter.convert(template.getRequest());
+        template.getResponse().stream().map(response -> responseConverter.convert(response))
+                .forEach(request1::addIssPasses);
+        return request1;
     }
 
-    private IssPassesRequest createIssPassesRequest(Response response) throws IOException {
-        var json = gson.fromJson( Objects.requireNonNull( response.body() ).string(), JsonObject.class );
-
-        final IssPassesRequest issPassesRequest = buildIssPassesRequest( json );
-
-        return addPasses( json, issPassesRequest );
-    }
-
-    private IssPassesRequest buildIssPassesRequest(JsonObject json) {
-        final RequestJSON request = gson.fromJson( json.get( "request" ), RequestJSON.class );
-
-        return IssPassesRequest.builder()
-                .latitude( request.getLatitude() )
-                .longitude( request.getLongitude() )
-                .altitude( request.getAltitude() )
-                .datetime( request.getDatetime() )
-                .passes( request.getPasses() )
-                .build();
-    }
-
-    private IssPassesRequest addPasses(JsonObject json, IssPassesRequest issPassesRequest) {
-        Collection<ResponseJSON> responseJSONS = gson.fromJson( json.get( "response" ),
-                                                                new TypeToken<ArrayList<ResponseJSON>>() {}.getType() );
-                responseJSONS.stream()
-                .map( r -> IssPasses.builder()
-                        .riseTime( r.getRisetime() )
-                        .duration( r.getDuration() )
-                        .build() )
-                .forEach( issPassesRequest::addIssPasses );
-        System.out.println( "issPassesRequest = " + issPassesRequest );
-        return issPassesRequest;
-    }
 }
