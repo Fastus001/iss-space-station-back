@@ -7,12 +7,12 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.springframework.stereotype.Service;
-import pl.fastus.spacestation.commands.RequestJSON;
-import pl.fastus.spacestation.commands.ResponseJSON;
 import pl.fastus.spacestation.domain.IssNow;
 import pl.fastus.spacestation.domain.IssPasses;
 import pl.fastus.spacestation.domain.IssPassesRequest;
 import pl.fastus.spacestation.domain.IssPosition;
+import pl.fastus.spacestation.json.RequestJSON;
+import pl.fastus.spacestation.json.ResponseJSON;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -79,7 +79,8 @@ public class OkHttpServiceImpl implements OkHttpService{
                 .latitude( request.getLatitude() )
                 .longitude( request.getLongitude() )
                 .altitude( request.getAltitude() )
-                .numberOfPasses( request.getPasses() )
+                .datetime( request.getDatetime() )
+                .passes( request.getPasses() )
                 .build();
     }
 

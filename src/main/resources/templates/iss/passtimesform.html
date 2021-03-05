@@ -32,7 +32,7 @@
                                 <div class="col-md-3 form-group" th:class="${#fields.hasErrors('latitude')}
                                 ? 'col-md-3 form-group has-error' : 'col-md-3 form-group'">
                                     <label >Latitude</label>
-                                    <input type="number" class="form-control" th:field="*{latitude}" th:errorclass="has-error"/>
+                                    <input type="text" class="form-control" th:field="*{latitude}" th:errorclass="has-error"/>
                                     <span class="help-block" th:if="${#fields.hasErrors('latitude')}">
                                         <ul>
                                             <li th:each="err : ${#fields.errors('latitude')}" th:text="${err}"/>
@@ -43,7 +43,7 @@
                                 <div class="col-md-3 form-group" th:class="${#fields.hasErrors('longitude')}
                                 ? 'col-md-3 form-group has-error' : 'col-md-3 form-group'">
                                     <label >Longitude</label>
-                                    <input type="number" class="form-control" th:field="*{longitude}" th:errorclass="has-error"/>
+                                    <input type="text" class="form-control" th:field="*{longitude}" th:errorclass="has-error"/>
                                     <span class="help-block" th:if="${#fields.hasErrors('latitude')}">
                                         <ul>
                                             <li th:each="err : ${#fields.errors('longitude')}" th:text="${err}"/>

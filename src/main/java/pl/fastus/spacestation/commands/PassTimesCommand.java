@@ -5,9 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
+import java.math.BigDecimal;
 
 @Getter
 @Setter
@@ -15,15 +14,15 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class PassTimesCommand {
 
-    @Min( -80 )
-    @Max( 80 )
+    @DecimalMin( value = "-80.0")
+    @DecimalMax( value = "80.0" )
     @NotNull
-    private Integer latitude;
+    private BigDecimal latitude;
 
-    @Min( -180 )
-    @Max( 180 )
+    @DecimalMin( value = "-180.0")
+    @DecimalMax( value = "180.0" )
     @NotNull
-    private Integer longitude;
+    private BigDecimal longitude;
 
     @Min( 0 )
     @Max( 10000 )

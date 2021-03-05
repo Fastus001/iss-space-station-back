@@ -22,8 +22,8 @@ public class IssPassesRequest {
     private double latitude;
     private double longitude;
     private Integer altitude;
-    private Integer numberOfPasses;
-    private Long requestTimestamp;
+    private Integer passes;
+    private Long datetime;
 
     @OneToMany(mappedBy = "issPassesRequest",cascade = CascadeType.ALL)
     private Set<IssPasses> responses = new HashSet<>();

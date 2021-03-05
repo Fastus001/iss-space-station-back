@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>ISS Location on map</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+
+    <script type="text/javascript" th:src="@{/js/location.js}"></script>
+
+<body style="background-image: url('../resources/images/wallpaper.jpg')" th:object=${issPassRequest}>
+
+<div class="container-fluid" style="margin-top: 20px">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-primary">
+
+                <div class="panel-heading">
+                    <h1 class="panel-title">Pass Times Request Data</h1>
+                </div>
+                <div class="panel-body">
+                    <div class="table">
+                        <table class="table table-hover">
+                            <thead class="thead-invers">
+                            <tr>
+                                <th>Latitude</th>
+                                <th>Longitude</th>
+                                <th>Altitude</th>
+                                <th>Date time</th>
+                                <th>Number of passes</th>
+                            </tr>
+                            </thead>
+                            <tr>
+                                <td th:text="${issPassRequest.latitude}">latitude</td>
+                                <td th:text="${issPassRequest.longitude}">longitude</td>
+                                <td th:text="${issPassRequest.altitude}">altitude</td>
+                                <td th:text="${issPassRequest.datetime}">date time</td>
+                                <td th:text="${issPassRequest.passes}">passes</td>
+                            </tr>
+
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4 class="panel-title">Next passes</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="table" style="background-color: #4ECEFB;">
+                        <table class="table table-hover">
+                            <thead class="thead-invers">
+                            <tr >
+                                <th>Duration</th>
+                                <th>Time stamp</th>
+                            </tr>
+                            </thead>
+                            <tr th:each = "response : ${issPassRequest.responses}">
+                                <td th:text="${response.duration}">duration</td>
+                                <td th:text="${response.riseTime}">time stamp</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

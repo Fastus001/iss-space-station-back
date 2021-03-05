@@ -1,4 +1,4 @@
-package pl.fastus.spacestation.commands;
+package pl.fastus.spacestation.json;
 
 import lombok.Data;
 

@@ -52,8 +52,8 @@ public class DataLoader implements CommandLineRunner {
         IssPassesRequest request = IssPassesRequest.builder()
                 .latitude( 25 )
                 .longitude( 25 )
-                .requestTimestamp( 122122L )
-                .numberOfPasses( 5 )
+                .datetime( 122122L )
+                .passes( 5 )
                 .build();
         request.addIssPasses( passOne );
         request.addIssPasses( passTwo );
