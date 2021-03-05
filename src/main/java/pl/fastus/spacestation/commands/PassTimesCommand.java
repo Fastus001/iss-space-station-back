@@ -7,7 +7,7 @@ import lombok.ToString;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -17,19 +17,19 @@ public class PassTimesCommand {
 
     @Min( -80 )
     @Max( 80 )
-    @NotEmpty
-    private double latitude;
+    @NotNull
+    private Integer latitude;
 
     @Min( -180 )
     @Max( 180 )
-    @NotEmpty
-    private double longitude;
+    @NotNull
+    private Integer longitude;
 
     @Min( 0 )
     @Max( 10000 )
-    private int altitude;
+    private Integer altitude;
 
     @Min( 1 )
     @Max( 100 )
-    private int numberOfPasses;
+    private Integer numberOfPasses;
 }

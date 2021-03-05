@@ -18,6 +18,10 @@
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <form th:object = "${passTimes}" th:action = "@{/passTimes/}" method="post">
+                <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                    <p>Please Correct Errors Below</p>
+                </div>
+
                 <div class="panel-group">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
@@ -25,24 +29,48 @@
                         </div>
                         <div class="panel-body">
                             <div class="row">
-                                <div class="col-md-3 form-group">
+                                <div class="col-md-3 form-group" th:class="${#fields.hasErrors('latitude')}
+                                ? 'col-md-3 form-group has-error' : 'col-md-3 form-group'">
                                     <label >Latitude</label>
-                                    <input type="text" class="form-control" th:field="*{latitude}" />
+                                    <input type="number" class="form-control" th:field="*{latitude}" th:errorclass="has-error"/>
+                                    <span class="help-block" th:if="${#fields.hasErrors('latitude')}">
+                                        <ul>
+                                            <li th:each="err : ${#fields.errors('latitude')}" th:text="${err}"/>
+                                        </ul>
+                                    </span>
                                 </div>
 
-                                <div class="col-md-3 form-group">
+                                <div class="col-md-3 form-group" th:class="${#fields.hasErrors('longitude')}
+                                ? 'col-md-3 form-group has-error' : 'col-md-3 form-group'">
                                     <label >Longitude</label>
-                                    <input type="text" class="form-control" th:field="*{longitude}" />
+                                    <input type="number" class="form-control" th:field="*{longitude}" th:errorclass="has-error"/>
+                                    <span class="help-block" th:if="${#fields.hasErrors('latitude')}">
+                                        <ul>
+                                            <li th:each="err : ${#fields.errors('longitude')}" th:text="${err}"/>
+                                        </ul>
+                                    </span>
                                 </div>
 
-                                <div class="col-md-3 form-group">
+                                <div class="col-md-3 form-group" th:class="${#fields.hasErrors('altitude')}
+                                ? 'col-md-3 form-group has-error' : 'col-md-3 form-group'">
                                     <label >Altitude</label>
-                                    <input type="text" class="form-control" th:field="*{altitude}" />
+                                    <input type="number" class="form-control" th:field="*{altitude}" th:errorclass="has-error"/>
+                                    <span class="help-block" th:if="${#fields.hasErrors('altitude')}">
+                                        <ul>
+                                            <li th:each="err : ${#fields.errors('altitude')}" th:text="${err}"/>
+                                        </ul>
+                                    </span>
                                 </div>
 
-                                <div class="col-md-3 form-group">
+                                <div class="col-md-3 form-group" th:class="${#fields.hasErrors('numberOfPasses')}
+                                ? 'col-md-3 form-group has-error' : 'col-md-3 form-group'">
                                     <label >Number of passes</label>
-                                    <input type="text" class="form-control" th:field="*{numberOfPasses}" />
+                                    <input type="number" class="form-control" th:field="*{numberOfPasses}" th:errorclass="has-error"/>
+                                    <span class="help-block" th:if="${#fields.hasErrors('numberOfPasses')}">
+                                        <ul>
+                                            <li th:each="err : ${#fields.errors('numberOfPasses')}" th:text="${err}"/>
+                                        </ul>
+                                    </span>
                                 </div>
                             </div>
                             <div class="row">
