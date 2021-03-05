@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import pl.fastus.spacestation.commands.PassTimesCommand;
 import pl.fastus.spacestation.domain.IssNow;
 import pl.fastus.spacestation.services.IssNowService;
 import pl.fastus.spacestation.services.IssPassesRequestService;
@@ -56,6 +57,18 @@ class IssControllerTest {
         verify( okHttpService,times( 1 ) ).getIssNow();
         verify( issNowService,times( 1 ) ).save( any() );
     }
+
+    @Test
+    public void testGetShowPassTimesForm() throws Exception {
+        PassTimesCommand command = new PassTimesCommand();
+
+        mockMvc.perform(get("/iss/passTimes"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("iss/passtimesform"))
+                .andExpect(model().attributeExists("passTimes"));
+    }
+
+
 
 
 }

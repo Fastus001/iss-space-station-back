@@ -53,10 +53,12 @@ public class IssController {
 
     @PostMapping("passTimes")
     public String showPassTimes(@ModelAttribute("passTimes") PassTimesCommand command, Model model){
+
         webDataBinder.validate();
         final BindingResult bindingResult = webDataBinder.getBindingResult();
 
         if( bindingResult.hasErrors() ){
+
             bindingResult.getAllErrors().forEach(objectError -> {
                 log.debug(objectError.toString());
             });
