@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import pl.fastus.spacestation.commands.PassTimesCommand;
 import pl.fastus.spacestation.domain.IssNow;
 import pl.fastus.spacestation.services.IssNowService;
+import pl.fastus.spacestation.services.IssPassesRequestService;
 import pl.fastus.spacestation.services.OkHttpService;
 
 @Slf4j
@@ -21,12 +22,15 @@ public class IssController {
 
     private final OkHttpService okHttpService;
     private final IssNowService issNowService;
+    private final IssPassesRequestService issPassesRequestService;
 
     private WebDataBinder webDataBinder;
 
-    public IssController(OkHttpService okHttpService, IssNowService issNowService) {
+    public IssController(OkHttpService okHttpService, IssNowService issNowService,
+                         IssPassesRequestService issPassesRequestService) {
         this.okHttpService = okHttpService;
         this.issNowService = issNowService;
+        this.issPassesRequestService = issPassesRequestService;
     }
 
     @InitBinder
@@ -48,7 +52,7 @@ public class IssController {
     }
 
     @PostMapping("passTimes")
-    public String showPassTimes(@ModelAttribute("passTimes") PassTimesCommand command){
+    public String showPassTimes(@ModelAttribute("passTimes") PassTimesCommand command, Model model){
         webDataBinder.validate();
         final BindingResult bindingResult = webDataBinder.getBindingResult();
 
@@ -59,10 +63,8 @@ public class IssController {
 
             return ISS_PASS_TIMES_FORM;
         }
-
-        //TODO - get data and show passes
-        System.out.println( "command = " + command );
-
+        model.addAttribute( "issPassRequest",
+                            issPassesRequestService.save( okHttpService.createIssPassesRequest( command.getUrl() ) ));
 
         return "iss/showPassTimes";
     }

@@ -1,19 +1,18 @@
 package pl.fastus.spacestation.domain;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(exclude = "issPassesRequest")
+@Builder
 @Entity
 public class IssPasses {
 
@@ -24,6 +23,6 @@ public class IssPasses {
     private Long riseTime;
     private int duration;
 
-    @ManyToMany(mappedBy = "responses")
+    @ManyToOne
     private IssPassesRequest issPassesRequest;
 }

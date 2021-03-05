@@ -10,6 +10,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import pl.fastus.spacestation.domain.IssNow;
 import pl.fastus.spacestation.services.IssNowService;
+import pl.fastus.spacestation.services.IssPassesRequestService;
 import pl.fastus.spacestation.services.OkHttpService;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -26,6 +27,9 @@ class IssControllerTest {
     @Mock
     IssNowService issNowService;
 
+    @Mock
+    IssPassesRequestService issPassesRequestService;
+
     @InjectMocks
     IssController issController;
 
@@ -33,7 +37,7 @@ class IssControllerTest {
 
     @BeforeEach
     void setUp() {
-        issController = new IssController( okHttpService,issNowService );
+        issController = new IssController( okHttpService,issNowService,issPassesRequestService );
 
         mockMvc = MockMvcBuilders.standaloneSetup( issController ).build();
     }
@@ -51,7 +55,7 @@ class IssControllerTest {
 
         verify( okHttpService,times( 1 ) ).getIssNow();
         verify( issNowService,times( 1 ) ).save( any() );
-
-
     }
+
+
 }

@@ -32,4 +32,15 @@ public class PassTimesCommand {
     @Min( 1 )
     @Max( 100 )
     private Integer numberOfPasses;
+
+    public String getUrl(){
+        var sb = new StringBuilder("?lat="+latitude+"&lon="+longitude);
+        if(altitude!=null){
+            sb.append( "&alt=" ).append( altitude );
+        }
+        if ( numberOfPasses !=null ){
+            sb.append( "&n=" ).append( numberOfPasses );
+        }
+        return sb.toString();
+    }
 }

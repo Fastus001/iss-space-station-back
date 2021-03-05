@@ -1,9 +1,6 @@
 package pl.fastus.spacestation.domain;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -11,6 +8,8 @@ import java.util.Set;
 
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(exclude = "responses")
 @Entity
@@ -20,12 +19,20 @@ public class IssPassesRequest {
     @GeneratedValue
     private Long id;
 
-    private Integer latitude;
-    private Integer longitude;
+    private double latitude;
+    private double longitude;
     private Integer altitude;
     private Integer numberOfPasses;
     private Long requestTimestamp;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "issPassesRequest",cascade = CascadeType.ALL)
     private Set<IssPasses> responses = new HashSet<>();
+
+    public void addIssPasses(IssPasses passes){
+        if(responses == null){
+            responses = new HashSet<>();
+        }
+        responses.add( passes);
+        passes.setIssPassesRequest( this );
+    }
 }
