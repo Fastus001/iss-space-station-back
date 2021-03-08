@@ -6,8 +6,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import pl.fastus.spacestation.domain.IssNow;
-import pl.fastus.spacestation.domain.IssPosition;
+import pl.fastus.spacestation.domain.StationNow;
+import pl.fastus.spacestation.domain.Position;
 import pl.fastus.spacestation.repositories.IssNowRepository;
 
 import java.util.HashSet;
@@ -21,7 +21,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class IssNowSDJpaServiceImplTest {
+class StationNowSDJpaServiceImplTest {
 
     @Mock
     IssNowRepository issNowRepository;
@@ -29,29 +29,29 @@ class IssNowSDJpaServiceImplTest {
     @InjectMocks
     IssNowSDJpaServiceImpl service;
 
-    IssNow returnIssNow;
+    StationNow returnStationNow;
 
     @BeforeEach
     void setUp() {
-        IssPosition issPosition = IssPosition.builder()
+        Position position = Position.builder()
                 .latitude( 25.025 )
                 .longitude( -12.025 ).build();
 
-        returnIssNow = IssNow.builder()
+        returnStationNow = StationNow.builder()
                 .id( 1L )
                 .timeStamp( 125652564L )
-                .issPosition( issPosition ).build();
+                .position(position).build();
     }
 
     @Test
     void findAll() {
-        Set<IssNow> returnIssNow = new HashSet<>();
-        returnIssNow.add( IssNow.builder().id( 1L ).build() );
-        returnIssNow.add( IssNow.builder().id( 2L ).build() );
+        Set<StationNow> returnStationNow = new HashSet<>();
+        returnStationNow.add( StationNow.builder().id( 1L ).build() );
+        returnStationNow.add( StationNow.builder().id( 2L ).build() );
 
-        when( issNowRepository.findAll() ).thenReturn( returnIssNow );
+        when( issNowRepository.findAll() ).thenReturn(returnStationNow);
 
-        Set<IssNow> findAll = service.findAll();
+        Set<StationNow> findAll = service.findAll();
 
         assertNotNull( findAll );
         assertEquals( 2, findAll.size() );
@@ -59,28 +59,28 @@ class IssNowSDJpaServiceImplTest {
 
     @Test
     void findById() {
-        when(issNowRepository.findById( anyLong() )).thenReturn( Optional.of( returnIssNow ) );
+        when(issNowRepository.findById( anyLong() )).thenReturn( Optional.of(returnStationNow) );
 
-        IssNow issNow = service.findById( 1L );
+        StationNow stationNow = service.findById( 1L );
 
-        assertNotNull(issNow);
+        assertNotNull(stationNow);
     }
 
     @Test
     void save() {
-        IssNow toSave = IssNow.builder().id( 1L ).build();
+        StationNow toSave = StationNow.builder().id( 1L ).build();
 
-        when( issNowRepository.save( any() ) ).thenReturn( returnIssNow );
+        when( issNowRepository.save( any() ) ).thenReturn(returnStationNow);
 
-        IssNow issNowSaved = service.save( toSave );
+        StationNow stationNowSaved = service.save( toSave );
 
-        assertNotNull(issNowSaved);
+        assertNotNull(stationNowSaved);
         verify( issNowRepository,times( 1 ) ).save( any() );
     }
 
     @Test
     void delete() {
-        service.delete( returnIssNow );
+        service.delete(returnStationNow);
 
         verify( issNowRepository,times( 1 ) ).delete( any() );
     }

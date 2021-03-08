@@ -1,11 +1,11 @@
 package pl.fastus.spacestation.services;
 
-import pl.fastus.spacestation.domain.IssNow;
+import pl.fastus.spacestation.domain.StationNow;
 import pl.fastus.spacestation.domain.IssPassesRequest;
 
 public interface OkHttpService {
 
-     IssNow getIssNow();
+     StationNow getIssNow();
 
      IssPassesRequest createIssPassesRequest(String command);
 }

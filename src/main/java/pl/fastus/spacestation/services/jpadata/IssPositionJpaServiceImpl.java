@@ -1,7 +1,7 @@
 package pl.fastus.spacestation.services.jpadata;
 
 import org.springframework.stereotype.Service;
-import pl.fastus.spacestation.domain.IssPosition;
+import pl.fastus.spacestation.domain.Position;
 import pl.fastus.spacestation.repositories.IssPositionRepository;
 import pl.fastus.spacestation.services.IssPositionService;
 
@@ -18,24 +18,24 @@ public class IssPositionJpaServiceImpl implements IssPositionService {
     }
 
     @Override
-    public Set<IssPosition> findAll() {
-        Set<IssPosition> positions =  new HashSet<>();
+    public Set<Position> findAll() {
+        Set<Position> positions =  new HashSet<>();
         repository.findAll().forEach( positions::add );
         return positions;
     }
 
     @Override
-    public IssPosition findById(Long id) {
+    public Position findById(Long id) {
         return repository.findById( id ).orElse( null );
     }
 
     @Override
-    public IssPosition save(IssPosition object) {
+    public Position save(Position object) {
         return repository.save( object );
     }
 
     @Override
-    public void delete(IssPosition object) {
+    public void delete(Position object) {
         repository.delete( object );
     }
 

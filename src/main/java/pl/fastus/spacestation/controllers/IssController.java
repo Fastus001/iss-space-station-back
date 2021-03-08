@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.fastus.spacestation.commands.PassTimesCommand;
-import pl.fastus.spacestation.domain.IssNow;
+import pl.fastus.spacestation.domain.StationNow;
 import pl.fastus.spacestation.services.IssNowService;
 import pl.fastus.spacestation.services.IssPassesRequestService;
 import pl.fastus.spacestation.services.OkHttpService;
@@ -40,8 +40,8 @@ public class IssController {
 
     @RequestMapping({"iss/show", "iss/showlocation"})
     public String show(Model model){
-        final IssNow issNow = okHttpService.getIssNow();
-        model.addAttribute( "issNow", issNowService.save( issNow ));
+        final StationNow stationNow = okHttpService.getIssNow();
+        model.addAttribute( "stationNow", issNowService.save(stationNow));
         return "iss/show";
     }
 

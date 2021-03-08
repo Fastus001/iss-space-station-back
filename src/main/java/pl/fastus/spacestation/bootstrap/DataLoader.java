@@ -2,10 +2,10 @@ package pl.fastus.spacestation.bootstrap;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import pl.fastus.spacestation.domain.IssNow;
+import pl.fastus.spacestation.domain.StationNow;
 import pl.fastus.spacestation.domain.IssPasses;
 import pl.fastus.spacestation.domain.IssPassesRequest;
-import pl.fastus.spacestation.domain.IssPosition;
+import pl.fastus.spacestation.domain.Position;
 import pl.fastus.spacestation.services.IssNowService;
 import pl.fastus.spacestation.services.IssPassesRequestService;
 
@@ -32,15 +32,15 @@ public class DataLoader implements CommandLineRunner {
     }
 
     private void loadData() throws InterruptedException {
-        IssPosition position = IssPosition.builder()
+        Position position = Position.builder()
                 .latitude( 10 )
                 .longitude( 25 )
                 .build();
 
-        IssNow issNow = IssNow.builder().issPosition( position )
+        StationNow stationNow = StationNow.builder().position( position )
                 .timeStamp( 124563L ).build();
 
-        issNowService.save( issNow );
+        issNowService.save(stationNow);
 
         IssPasses passOne = IssPasses.builder().riseTime( 12345L )
                 .duration( 245 ).build();

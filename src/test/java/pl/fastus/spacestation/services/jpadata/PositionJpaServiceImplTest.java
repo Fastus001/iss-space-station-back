@@ -6,7 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import pl.fastus.spacestation.domain.IssPosition;
+import pl.fastus.spacestation.domain.Position;
 import pl.fastus.spacestation.repositories.IssPositionRepository;
 
 import java.util.HashSet;
@@ -20,7 +20,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class IssPositionJpaServiceImplTest {
+class PositionJpaServiceImplTest {
 
     @Mock
     IssPositionRepository repository;
@@ -28,23 +28,23 @@ class IssPositionJpaServiceImplTest {
     @InjectMocks
     IssPositionJpaServiceImpl service;
 
-    IssPosition returnPosition;
+    Position returnPosition;
 
 
     @BeforeEach
     void setUp() {
-        returnPosition = IssPosition.builder().id( 1L ).build();
+        returnPosition = Position.builder().id( 1L ).build();
     }
 
     @Test
     void findAll() {
-        Set<IssPosition> returnIssPositions = new HashSet<>();
-        returnIssPositions.add( IssPosition.builder().id( 1L ).build() );
-        returnIssPositions.add( IssPosition.builder().id( 2L ).build() );
+        Set<Position> returnPositions = new HashSet<>();
+        returnPositions.add( Position.builder().id( 1L ).build() );
+        returnPositions.add( Position.builder().id( 2L ).build() );
 
-        when(repository.findAll()).thenReturn( returnIssPositions );
+        when(repository.findAll()).thenReturn(returnPositions);
 
-        final Set<IssPosition> positions = service.findAll();
+        final Set<Position> positions = service.findAll();
 
         assertNotNull( positions );
         assertEquals( 2, positions.size() );
@@ -54,18 +54,18 @@ class IssPositionJpaServiceImplTest {
     void findById() {
         when( repository.findById( anyLong() ) ).thenReturn( Optional.of( returnPosition ));
 
-        final IssPosition byId = service.findById( 1L );
+        final Position byId = service.findById( 1L );
 
         assertNotNull( byId );
     }
 
     @Test
     void save() {
-        IssPosition toSave = IssPosition.builder().id( 1L ).build();
+        Position toSave = Position.builder().id( 1L ).build();
 
         when( repository.save( any() ) ).thenReturn( returnPosition );
 
-        final IssPosition savedPosition = service.save( toSave );
+        final Position savedPosition = service.save( toSave );
 
         assertNotNull( savedPosition );
         verify( repository, times( 1 )).save( any() );

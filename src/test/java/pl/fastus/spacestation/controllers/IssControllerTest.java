@@ -9,7 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import pl.fastus.spacestation.commands.PassTimesCommand;
-import pl.fastus.spacestation.domain.IssNow;
+import pl.fastus.spacestation.domain.StationNow;
 import pl.fastus.spacestation.services.IssNowService;
 import pl.fastus.spacestation.services.IssPassesRequestService;
 import pl.fastus.spacestation.services.OkHttpService;
@@ -45,9 +45,9 @@ class IssControllerTest {
 
     @Test
     void show() throws Exception {
-        final IssNow returnedIssNow = IssNow.builder().id( 1L ).build();
-        when(okHttpService.getIssNow()).thenReturn( returnedIssNow );
-        when( issNowService.save( any() ) ).thenReturn( returnedIssNow );
+        final StationNow returnedStationNow = StationNow.builder().id( 1L ).build();
+        when(okHttpService.getIssNow()).thenReturn(returnedStationNow);
+        when( issNowService.save( any() ) ).thenReturn(returnedStationNow);
 
         mockMvc.perform( get("/iss/show") )
                 .andExpect( status().isOk() )

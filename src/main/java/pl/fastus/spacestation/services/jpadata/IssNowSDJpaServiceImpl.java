@@ -1,9 +1,8 @@
 package pl.fastus.spacestation.services.jpadata;
 
 import org.springframework.stereotype.Service;
-import pl.fastus.spacestation.domain.IssNow;
+import pl.fastus.spacestation.domain.StationNow;
 import pl.fastus.spacestation.repositories.IssNowRepository;
-import pl.fastus.spacestation.repositories.IssPositionRepository;
 import pl.fastus.spacestation.services.IssNowService;
 
 import java.util.HashSet;
@@ -19,24 +18,24 @@ public class IssNowSDJpaServiceImpl implements IssNowService {
     }
 
     @Override
-    public Set<IssNow> findAll() {
-        Set<IssNow> issNowSet = new HashSet<>();
-        issNowRepository.findAll().forEach( issNowSet::add );
-        return issNowSet;
+    public Set<StationNow> findAll() {
+        Set<StationNow> stationNowSet = new HashSet<>();
+        issNowRepository.findAll().forEach( stationNowSet::add );
+        return stationNowSet;
     }
 
     @Override
-    public IssNow findById(Long id) {
+    public StationNow findById(Long id) {
         return issNowRepository.findById( id ).orElse( null );
     }
 
     @Override
-    public IssNow save(IssNow object) {
+    public StationNow save(StationNow object) {
         return issNowRepository.save( object );
     }
 
     @Override
-    public void delete(IssNow object) {
+    public void delete(StationNow object) {
         issNowRepository.delete( object );
     }
 

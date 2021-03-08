@@ -23,7 +23,7 @@
 
     <script type="text/javascript" th:src="@{/js/location.js}"></script>
 
-<body style="background-image: url('../resources/images/wallpaper.jpg')" th:object=${issNow}>
+<body style="background-image: url('../resources/images/wallpaper.jpg')" th:object=${stationNow}>
 <div class="container">
     <div class="container">
         <div class = "row ">
@@ -36,8 +36,8 @@
              tabindex="0">
         </div>
         <script th:inline="javascript">
-                var longitude = /*[[${issNow.getIssPosition().longitude}]]*/;
-                var latitude = /*[[${issNow.getIssPosition().latitude}]]*/;
+                var longitude = /*[[${stationNow.getPosition().longitude}]]*/;
+                var latitude = /*[[${stationNow.getPosition().latitude}]]*/;
                 showStationLocation(latitude,longitude);
             </script>
 

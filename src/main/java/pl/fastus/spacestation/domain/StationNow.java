@@ -8,16 +8,17 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@EqualsAndHashCode(exclude = "issPosition")
+@EqualsAndHashCode(exclude = "position")
 @Entity
-public class IssNow {
+public class StationNow {
 
     @Id
     @GeneratedValue
     private Long id;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private Position position;
+
     private Long timeStamp;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private IssPosition issPosition;
 }

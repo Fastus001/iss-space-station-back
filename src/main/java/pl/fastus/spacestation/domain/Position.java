@@ -11,10 +11,10 @@ import javax.persistence.OneToOne;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@EqualsAndHashCode(exclude = "issNow")
-@ToString(exclude = "issNow")
+@EqualsAndHashCode(exclude = "stationNow")
+@ToString(exclude = "stationNow")
 @Entity
-public class IssPosition {
+public class Position {
 
     @Id
     @GeneratedValue
@@ -23,6 +23,6 @@ public class IssPosition {
     private double latitude;
     private double longitude;
 
-    @OneToOne(mappedBy = "issPosition")
-    private IssNow issNow;
+    @OneToOne(mappedBy = "position")
+    private StationNow stationNow;
 }

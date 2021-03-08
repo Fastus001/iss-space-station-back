@@ -2,21 +2,17 @@ package pl.fastus.spacestation.services;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import pl.fastus.spacestation.commands.IssNow;
 import pl.fastus.spacestation.converters.RequestToIssPassesRequestConverter;
 import pl.fastus.spacestation.converters.ResponseToIssPassesConverter;
 import pl.fastus.spacestation.domain.*;
-import pl.fastus.spacestation.json.RequestJSON;
-import pl.fastus.spacestation.json.ResponseJSON;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Objects;
 
 @Service
@@ -27,10 +23,10 @@ public class OkHttpServiceImpl implements OkHttpService{
 
     private final OkHttpClient client = new OkHttpClient();
 
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
-    private RequestToIssPassesRequestConverter requestConverter;
-    private ResponseToIssPassesConverter responseConverter;
+    private final RequestToIssPassesRequestConverter requestConverter;
+    private final ResponseToIssPassesConverter responseConverter;
 
     public OkHttpServiceImpl(RestTemplate restTemplate, RequestToIssPassesRequestConverter requestConverter,
                              ResponseToIssPassesConverter responseConverter) {
@@ -40,9 +36,12 @@ public class OkHttpServiceImpl implements OkHttpService{
     }
 
     @Override
-    public IssNow getIssNow() {
+    public StationNow getIssNow() {
+        final IssNow forObject = restTemplate.getForObject(ISS_NOW_URL, IssNow.class);
+        System.out.println("forObject = " + forObject);
+
         Request request = new Request.Builder().url( ISS_NOW_URL).build();
-        IssNow currentLocation = null;
+        StationNow currentLocation = null;
             try (Response response = client.newCall( request ).execute()) {
                 currentLocation =  createIssNow( response );
             } catch (IOException e) {
@@ -51,15 +50,15 @@ public class OkHttpServiceImpl implements OkHttpService{
         return currentLocation;
     }
 
-    private IssNow createIssNow(Response response) throws IOException {
+    private StationNow createIssNow(Response response) throws IOException {
         var json = gson.fromJson( Objects.requireNonNull( response.body() ).string(), JsonObject.class );
 
-        IssPosition issPosition = gson.fromJson( json.get( "iss_position" ), IssPosition.class );
+        Position position = gson.fromJson( json.get( "iss_position" ), Position.class );
 
-        return IssNow.builder()
+        return StationNow.builder()
                 .timeStamp( json.get( "timestamp" )
                                     .getAsLong() )
-                .issPosition( issPosition )
+                .position(position)
                 .build();
     }
 
@@ -68,8 +67,10 @@ public class OkHttpServiceImpl implements OkHttpService{
                 Example.class);
 
         final IssPassesRequest request1 = requestConverter.convert(template.getRequest());
-        template.getResponse().stream().map(response -> responseConverter.convert(response))
+        template.getResponse().stream().map(responseConverter::convert)
                 .forEach(request1::addIssPasses);
+
+
         return request1;
     }
 
