@@ -14,14 +14,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(MockitoExtension.class)
-class OkHttpServiceImplTest {
+class IssServiceImplTest {
     private static final int NUMBER_OF_PASSES = 10;
 
     @Mock
     RestTemplate restTemplate;
 
     @InjectMocks
-    OkHttpServiceImpl service;
+    IssServiceImpl service;
 
     private RequestToIssPassesRequestConverter requestConverter;
     private ResponseToIssPassesConverter responseConverter;
@@ -29,7 +29,7 @@ class OkHttpServiceImplTest {
 
     @BeforeEach
     void setService(){
-        service = new OkHttpServiceImpl(restTemplate, requestConverter, responseConverter);
+//        service = new OkHttpServiceImpl(restTemplate, requestConverter, responseConverter);
     }
 
     @Test

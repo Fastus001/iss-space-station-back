@@ -12,7 +12,7 @@ import pl.fastus.spacestation.commands.PassTimesCommand;
 import pl.fastus.spacestation.domain.StationNow;
 import pl.fastus.spacestation.services.IssNowService;
 import pl.fastus.spacestation.services.IssPassesRequestService;
-import pl.fastus.spacestation.services.OkHttpService;
+import pl.fastus.spacestation.services.IssService;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class IssControllerTest {
 
     @Mock
-    OkHttpService okHttpService;
+    IssService issService;
 
     @Mock
     IssNowService issNowService;
@@ -38,7 +38,7 @@ class IssControllerTest {
 
     @BeforeEach
     void setUp() {
-        issController = new IssController( okHttpService,issNowService,issPassesRequestService );
+        issController = new IssController(issService,issNowService,issPassesRequestService );
 
         mockMvc = MockMvcBuilders.standaloneSetup( issController ).build();
     }
@@ -46,15 +46,15 @@ class IssControllerTest {
     @Test
     void show() throws Exception {
         final StationNow returnedStationNow = StationNow.builder().id( 1L ).build();
-        when(okHttpService.getIssNow()).thenReturn(returnedStationNow);
+        when(issService.getIssNow()).thenReturn(returnedStationNow);
         when( issNowService.save( any() ) ).thenReturn(returnedStationNow);
 
         mockMvc.perform( get("/iss/show") )
                 .andExpect( status().isOk() )
                 .andExpect( view().name( "iss/show" ) )
-                .andExpect( model().attributeExists( "issNow" ) );
+                .andExpect( model().attributeExists( "stationNow" ) );
 
-        verify( okHttpService,times( 1 ) ).getIssNow();
+        verify(issService,times( 1 ) ).getIssNow();
         verify( issNowService,times( 1 ) ).save( any() );
     }
 
