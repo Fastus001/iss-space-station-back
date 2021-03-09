@@ -2,12 +2,13 @@ package pl.fastus.spacestation.services;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import org.mapstruct.factory.Mappers;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import pl.fastus.spacestation.converters.RequestToIssPassesRequestConverter;
+import pl.fastus.spacestation.converters.RequestMapper;
 import pl.fastus.spacestation.converters.ResponseToIssPassesConverter;
 import pl.fastus.spacestation.domain.Example;
 import pl.fastus.spacestation.domain.IssPassesRequest;
@@ -21,13 +22,10 @@ public class IssServiceImpl implements IssService {
     private final Gson gson = new Gson();
     private final RestTemplate restTemplate;
 
-    private final RequestToIssPassesRequestConverter requestConverter;
     private final ResponseToIssPassesConverter responseConverter;
 
-    public IssServiceImpl(RestTemplate restTemplate, RequestToIssPassesRequestConverter requestConverter,
-                          ResponseToIssPassesConverter responseConverter) {
+    public IssServiceImpl(RestTemplate restTemplate, ResponseToIssPassesConverter responseConverter) {
         this.restTemplate = restTemplate;
-        this.requestConverter = requestConverter;
         this.responseConverter = responseConverter;
     }
 
@@ -54,7 +52,10 @@ public class IssServiceImpl implements IssService {
         final Example template = restTemplate.getForObject("http://api.open-notify.org/iss-pass.json" + urlPart,
                 Example.class);
 
-        final IssPassesRequest request1 = requestConverter.convert(template.getRequest());
+
+        final IssPassesRequest request1 = Mappers.getMapper( RequestMapper.class )
+                .requestToPassesRequest( template.getRequest());
+
         template.getResponse().stream().map(responseConverter::convert)
                 .forEach(request1::addIssPasses);
 

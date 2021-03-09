@@ -31,6 +31,6 @@ public class IssPassesRequest  extends BaseEntity{
             responses = new HashSet<>();
         }
         responses.add( passes);
-        passes.setIssPassesRequest( this );
+        passes  .setIssPassesRequest( this );
     }
 }
