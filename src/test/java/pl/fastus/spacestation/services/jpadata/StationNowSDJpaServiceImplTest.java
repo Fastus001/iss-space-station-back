@@ -6,9 +6,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import pl.fastus.spacestation.domain.StationNow;
 import pl.fastus.spacestation.domain.Position;
-import pl.fastus.spacestation.repositories.IssNowRepository;
+import pl.fastus.spacestation.domain.StationNow;
+import pl.fastus.spacestation.repositories.StationNowRepository;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -24,10 +24,10 @@ import static org.mockito.Mockito.*;
 class StationNowSDJpaServiceImplTest {
 
     @Mock
-    IssNowRepository issNowRepository;
+    StationNowRepository stationNowRepository;
 
     @InjectMocks
-    IssNowSDJpaServiceImpl service;
+    StationNowSDJpaServiceImpl service;
 
     StationNow returnStationNow;
 
@@ -47,9 +47,9 @@ class StationNowSDJpaServiceImplTest {
     void findAll() {
         Set<StationNow> returnStationNow = new HashSet<>();
         returnStationNow.add( StationNow.builder().id( 1L ).build() );
-        returnStationNow.add( StationNow.builder().id( 2L ).build() );
+        returnStationNow.add( StationNow.builder().id( 2L ).timeStamp( 12453L ).build() );
 
-        when( issNowRepository.findAll() ).thenReturn(returnStationNow);
+        when( stationNowRepository.findAll() ).thenReturn( returnStationNow);
 
         Set<StationNow> findAll = service.findAll();
 
@@ -59,7 +59,7 @@ class StationNowSDJpaServiceImplTest {
 
     @Test
     void findById() {
-        when(issNowRepository.findById( anyLong() )).thenReturn( Optional.of(returnStationNow) );
+        when( stationNowRepository.findById( anyLong() )).thenReturn( Optional.of( returnStationNow) );
 
         StationNow stationNow = service.findById( 1L );
 
@@ -70,25 +70,25 @@ class StationNowSDJpaServiceImplTest {
     void save() {
         StationNow toSave = StationNow.builder().id( 1L ).build();
 
-        when( issNowRepository.save( any() ) ).thenReturn(returnStationNow);
+        when( stationNowRepository.save( any() ) ).thenReturn( returnStationNow);
 
         StationNow stationNowSaved = service.save( toSave );
 
         assertNotNull(stationNowSaved);
-        verify( issNowRepository,times( 1 ) ).save( any() );
+        verify( stationNowRepository, times( 1 ) ).save( any() );
     }
 
     @Test
     void delete() {
         service.delete(returnStationNow);
 
-        verify( issNowRepository,times( 1 ) ).delete( any() );
+        verify( stationNowRepository, times( 1 ) ).delete( any() );
     }
 
     @Test
     void deleteById() {
         service.deleteById( 1L );
 
-        verify( issNowRepository,times( 1 ) ).deleteById( anyLong() );
+        verify( stationNowRepository, times( 1 ) ).deleteById( anyLong() );
     }
 }

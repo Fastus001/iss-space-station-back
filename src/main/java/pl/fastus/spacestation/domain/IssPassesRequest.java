@@ -2,7 +2,9 @@ package pl.fastus.spacestation.domain;
 
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,13 +13,9 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = "responses")
+@EqualsAndHashCode(exclude = "responses", callSuper = false)
 @Entity
-public class IssPassesRequest {
-
-    @Id
-    @GeneratedValue
-    private Long id;
+public class IssPassesRequest  extends BaseEntity{
 
     private double latitude;
     private double longitude;

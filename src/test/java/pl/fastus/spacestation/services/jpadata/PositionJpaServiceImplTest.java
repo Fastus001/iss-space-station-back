@@ -40,7 +40,7 @@ class PositionJpaServiceImplTest {
     void findAll() {
         Set<Position> returnPositions = new HashSet<>();
         returnPositions.add( Position.builder().id( 1L ).build() );
-        returnPositions.add( Position.builder().id( 2L ).build() );
+        returnPositions.add( Position.builder().id( 2L ).latitude( 25.3 ).build() );
 
         when(repository.findAll()).thenReturn(returnPositions);
 

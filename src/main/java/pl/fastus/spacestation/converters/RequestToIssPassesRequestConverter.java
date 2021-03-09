@@ -17,6 +17,7 @@ public class RequestToIssPassesRequestConverter implements Converter<Request, Is
                 .latitude(request.getLatitude())
                 .longitude(request.getLongitude())
                 .altitude(request.getAltitude())
+                .datetime( request.getDatetime() )
                 .passes(request.getPasses()).build();
     }
 }

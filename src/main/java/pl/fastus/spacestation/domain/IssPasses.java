@@ -3,22 +3,16 @@ package pl.fastus.spacestation.domain;
 import lombok.*;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(exclude = "issPassesRequest")
+@EqualsAndHashCode(exclude = "issPassesRequest",callSuper = true)
 @Builder
 @Entity
-public class IssPasses {
-
-    @Id
-    @GeneratedValue
-    private Long id;
+public class IssPasses extends BaseEntity{
 
     private Long riseTime;
     private int duration;

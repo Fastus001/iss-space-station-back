@@ -5,5 +5,5 @@ import pl.fastus.spacestation.domain.StationNow;
 
 
 @Service
-public interface IssNowService extends CrudService<StationNow, Long>{
+public interface StationNowService extends CrudService<StationNow, Long>{
 }

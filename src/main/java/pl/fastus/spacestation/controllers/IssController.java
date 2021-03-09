@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.fastus.spacestation.commands.PassTimesCommand;
 import pl.fastus.spacestation.domain.StationNow;
-import pl.fastus.spacestation.services.IssNowService;
 import pl.fastus.spacestation.services.IssPassesRequestService;
 import pl.fastus.spacestation.services.IssService;
+import pl.fastus.spacestation.services.StationNowService;
 
 @Slf4j
 @Controller
@@ -21,15 +21,15 @@ public class IssController {
     private static final String ISS_PASS_TIMES_FORM = "iss/passtimesform";
 
     private final IssService issService;
-    private final IssNowService issNowService;
+    private final StationNowService stationNowService;
     private final IssPassesRequestService issPassesRequestService;
 
     private WebDataBinder webDataBinder;
 
-    public IssController(IssService issService, IssNowService issNowService,
+    public IssController(IssService issService, StationNowService stationNowService,
                          IssPassesRequestService issPassesRequestService) {
         this.issService = issService;
-        this.issNowService = issNowService;
+        this.stationNowService = stationNowService;
         this.issPassesRequestService = issPassesRequestService;
     }
 
@@ -41,7 +41,7 @@ public class IssController {
     @RequestMapping({"iss/show", "iss/showlocation"})
     public String show(Model model){
         final StationNow stationNow = issService.getIssNow();
-        model.addAttribute( "stationNow", issNowService.save(stationNow));
+        model.addAttribute( "stationNow", stationNowService.save( stationNow));
         return "iss/show";
     }
 
