@@ -1,15 +1,12 @@
 
-package pl.fastus.spacestation.domain;
+package pl.fastus.spacestation.domain.apipass;
 
 import lombok.Data;
-import lombok.ToString;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Data
-public class Example {
+public class ApiPass {
 
     private String message;
     private Request request;

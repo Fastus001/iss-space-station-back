@@ -1,5 +1,5 @@
 
-package pl.fastus.spacestation.domain;
+package pl.fastus.spacestation.domain.apipass;
 
 import lombok.Builder;
 import lombok.Data;

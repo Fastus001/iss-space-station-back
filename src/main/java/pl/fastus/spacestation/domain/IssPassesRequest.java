@@ -8,8 +8,7 @@ import javax.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.Set;
 
-@Getter
-@Setter
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,12 +24,4 @@ public class IssPassesRequest  extends BaseEntity{
 
     @OneToMany(mappedBy = "issPassesRequest",cascade = CascadeType.ALL)
     private Set<IssPasses> responses = new HashSet<>();
-
-    public void addIssPasses(IssPasses passes){
-        if(responses == null){
-            responses = new HashSet<>();
-        }
-        responses.add( passes);
-        passes  .setIssPassesRequest( this );
-    }
 }

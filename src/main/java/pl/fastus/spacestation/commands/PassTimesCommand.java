@@ -4,9 +4,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
+import java.util.Collections;
 
 @Getter
 @Setter
@@ -32,14 +35,20 @@ public class PassTimesCommand {
     @Max( 100 )
     private Integer numberOfPasses;
 
-    public String getUrl(){
-        var sb = new StringBuilder("?lat="+latitude+"&lon="+longitude);
+    public MultiValueMap<String, String> getUrl(){
+        MultiValueMap<String, String> temp = new LinkedMultiValueMap<>();
+        temp.put( "lat", Collections.singletonList( String.valueOf( latitude ) ) );
+        temp.put( "lon", Collections.singletonList( String.valueOf( longitude ) ) );
+
+//        var sb = new StringBuilder("?lat="+latitude+"&lon="+longitude);
         if(altitude!=null){
-            sb.append( "&alt=" ).append( altitude );
+//            sb.append( "&alt=" ).append( altitude );
+            temp.put( "alt", Collections.singletonList( String.valueOf( altitude ) ) );
         }
         if ( numberOfPasses !=null ){
-            sb.append( "&n=" ).append( numberOfPasses );
+//            sb.append( "&n=" ).append( numberOfPasses );
+            temp.put( "n", Collections.singletonList( String.valueOf( numberOfPasses ) ) );
         }
-        return sb.toString();
+        return temp;
     }
 }

@@ -7,7 +7,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.client.RestTemplate;
-import pl.fastus.spacestation.converters.ResponseToIssPassesConverter;
 
 @ExtendWith(MockitoExtension.class)
 class IssServiceImplTest {
@@ -19,7 +18,6 @@ class IssServiceImplTest {
     @InjectMocks
     IssServiceImpl service;
 
-    private ResponseToIssPassesConverter responseConverter;
 
 
     @BeforeEach

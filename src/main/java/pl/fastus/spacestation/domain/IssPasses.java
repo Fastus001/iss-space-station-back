@@ -10,12 +10,13 @@ import javax.persistence.ManyToOne;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(exclude = "issPassesRequest",callSuper = true)
+@ToString
 @Builder
 @Entity
 public class IssPasses extends BaseEntity{
 
+    private Integer duration;
     private Long riseTime;
-    private int duration;
 
     @ManyToOne
     private IssPassesRequest issPassesRequest;
