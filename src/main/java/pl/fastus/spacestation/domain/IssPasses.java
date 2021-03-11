@@ -9,15 +9,20 @@ import javax.persistence.ManyToOne;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(exclude = "issPassesRequest",callSuper = true)
+@EqualsAndHashCode(exclude = "issPassesRequest",callSuper = false)
 @ToString
 @Builder
 @Entity
-public class IssPasses extends BaseEntity{
+public class IssPasses extends BaseEntity implements Comparable<IssPasses>{
 
     private Integer duration;
     private Long riseTime;
 
     @ManyToOne
     private IssPassesRequest issPassesRequest;
+
+    @Override
+    public int compareTo(IssPasses o) {
+        return this.riseTime.compareTo( o.riseTime );
+    }
 }

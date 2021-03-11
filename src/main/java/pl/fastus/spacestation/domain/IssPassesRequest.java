@@ -5,8 +5,9 @@ import lombok.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import java.util.HashSet;
-import java.util.Set;
+import javax.persistence.OrderBy;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 @Data
 @Builder
@@ -22,6 +23,7 @@ public class IssPassesRequest  extends BaseEntity{
     private Integer passes;
     private Long datetime;
 
+    @OrderBy("sort")
     @OneToMany(mappedBy = "issPassesRequest",cascade = CascadeType.ALL)
-    private Set<IssPasses> responses = new HashSet<>();
+    private SortedSet<IssPasses> responses = new TreeSet<>();
 }

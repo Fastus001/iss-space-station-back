@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.fastus.spacestation.commands.PassTimesCommand;
+import pl.fastus.spacestation.domain.IssPassesRequest;
 import pl.fastus.spacestation.domain.StationNow;
 import pl.fastus.spacestation.services.IssPassesRequestService;
 import pl.fastus.spacestation.services.IssService;
@@ -59,14 +60,14 @@ public class IssController {
 
         if( bindingResult.hasErrors() ){
 
-            bindingResult.getAllErrors().forEach(objectError -> {
-                log.debug(objectError.toString());
-            });
+            bindingResult.getAllErrors().forEach(objectError -> log.debug( objectError.toString()) );
 
             return ISS_PASS_TIMES_FORM;
         }
-        model.addAttribute( "issPassRequest",
-                            issPassesRequestService.save( issService.createIssPassesRequest( command.getUrl() ) ));
+        final IssPassesRequest savedIssPassesRequest = issPassesRequestService
+                .save( issService.createIssPassesRequest( command.getUriParams() ));
+
+        model.addAttribute( "issPassRequest",savedIssPassesRequest);
 
         return "iss/showPassTimes";
     }

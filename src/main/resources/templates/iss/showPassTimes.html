@@ -15,7 +15,7 @@
 
 <body style="background-image: url('../resources/images/wallpaper.jpg')" th:object=${issPassRequest}>
 
-<div class="container-fluid" style="margin-top: 20px">
+<div class="container" style="margin-top: 20px">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-primary">
@@ -31,7 +31,7 @@
                                 <th>Latitude</th>
                                 <th>Longitude</th>
                                 <th>Altitude</th>
-                                <th>Date time</th>
+                                <th>Request date time</th>
                                 <th>Number of passes</th>
                             </tr>
                             </thead>
@@ -39,7 +39,8 @@
                                 <td th:text="${issPassRequest.latitude}">latitude</td>
                                 <td th:text="${issPassRequest.longitude}">longitude</td>
                                 <td th:text="${issPassRequest.altitude}">altitude</td>
-                                <td th:text="${issPassRequest.datetime}">date time</td>
+<!--                                <td th:text="${issPassRequest.datetime}">date time</td>-->
+                                <td th:text="${#dates.format(issPassRequest.datetime * 1000, 'dd-MM-yyyy HH:mm:ss')}">Request date time</td>
                                 <td th:text="${issPassRequest.passes}">passes</td>
                             </tr>
 
@@ -59,11 +60,13 @@
                             <tr >
                                 <th>Duration</th>
                                 <th>Time stamp</th>
+                                <th>Date</th>
                             </tr>
                             </thead>
                             <tr th:each = "response : ${issPassRequest.responses}">
                                 <td th:text="${response.duration}">duration</td>
                                 <td th:text="${response.riseTime}">time stamp</td>
+                                <td th:text="${#dates.format(response.riseTime * 1000, 'dd-MM-yyyy HH:mm:ss')}">date</td>
                             </tr>
                         </table>
                     </div>

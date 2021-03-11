@@ -35,18 +35,15 @@ public class PassTimesCommand {
     @Max( 100 )
     private Integer numberOfPasses;
 
-    public MultiValueMap<String, String> getUrl(){
+    public MultiValueMap<String, String> getUriParams(){
         MultiValueMap<String, String> temp = new LinkedMultiValueMap<>();
         temp.put( "lat", Collections.singletonList( String.valueOf( latitude ) ) );
         temp.put( "lon", Collections.singletonList( String.valueOf( longitude ) ) );
 
-//        var sb = new StringBuilder("?lat="+latitude+"&lon="+longitude);
         if(altitude!=null){
-//            sb.append( "&alt=" ).append( altitude );
             temp.put( "alt", Collections.singletonList( String.valueOf( altitude ) ) );
         }
         if ( numberOfPasses !=null ){
-//            sb.append( "&n=" ).append( numberOfPasses );
             temp.put( "n", Collections.singletonList( String.valueOf( numberOfPasses ) ) );
         }
         return temp;
