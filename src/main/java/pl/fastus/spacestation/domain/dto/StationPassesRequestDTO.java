@@ -1,12 +1,14 @@
 
-package pl.fastus.spacestation.domain.apipass;
+package pl.fastus.spacestation.domain.dto;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@NoArgsConstructor
 @Data
-public class ApiPass {
+public class StationPassesRequestDTO {
 
     private String message;
     private Request request;

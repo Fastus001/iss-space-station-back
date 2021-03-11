@@ -1,14 +1,16 @@
 
-package pl.fastus.spacestation.domain.apinow;
+package pl.fastus.spacestation.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data
+@NoArgsConstructor
 @ToString
-public class ApiNow {
+public class StationNowDTO {
 
     @JsonProperty("iss_position")
     private IssPosition issPosition;
@@ -17,7 +19,7 @@ public class ApiNow {
     private Long timestamp;
 
     @Builder
-    public ApiNow(IssPosition issPosition, String message, Long timestamp) {
+    public StationNowDTO(IssPosition issPosition, String message, Long timestamp) {
         this.issPosition = issPosition;
         this.message = message;
         this.timestamp = timestamp;

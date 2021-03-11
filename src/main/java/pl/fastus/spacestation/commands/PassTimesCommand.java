@@ -9,7 +9,9 @@ import org.springframework.util.MultiValueMap;
 
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
-import java.util.Collections;
+import java.util.List;
+
+import static java.lang.String.valueOf;
 
 @Getter
 @Setter
@@ -37,14 +39,14 @@ public class PassTimesCommand {
 
     public MultiValueMap<String, String> getUriParams(){
         MultiValueMap<String, String> temp = new LinkedMultiValueMap<>();
-        temp.put( "lat", Collections.singletonList( String.valueOf( latitude ) ) );
-        temp.put( "lon", Collections.singletonList( String.valueOf( longitude ) ) );
+        temp.put( "lat", List.of( valueOf( latitude ) ) );
+        temp.put( "lon", List.of( valueOf( longitude ) ) );
 
         if(altitude!=null){
-            temp.put( "alt", Collections.singletonList( String.valueOf( altitude ) ) );
+            temp.put( "alt", List.of( valueOf( altitude ) ) );
         }
         if ( numberOfPasses !=null ){
-            temp.put( "n", Collections.singletonList( String.valueOf( numberOfPasses ) ) );
+            temp.put( "n", List.of( valueOf( numberOfPasses ) ) );
         }
         return temp;
     }

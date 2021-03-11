@@ -64,8 +64,9 @@ public class IssController {
 
             return ISS_PASS_TIMES_FORM;
         }
+
         final IssPassesRequest savedIssPassesRequest = issPassesRequestService
-                .save( issService.createIssPassesRequest( command.getUriParams() ));
+                .save(issService.createIssPassesRequest( command.getUriParams() ));
 
         model.addAttribute( "issPassRequest",savedIssPassesRequest);
 

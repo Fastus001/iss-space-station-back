@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 import pl.fastus.spacestation.domain.IssPassesRequest;
 import pl.fastus.spacestation.domain.StationNow;
-import pl.fastus.spacestation.domain.apinow.ApiNow;
-import pl.fastus.spacestation.domain.apinow.IssPosition;
-import pl.fastus.spacestation.domain.apipass.Request;
-import pl.fastus.spacestation.domain.apipass.Response;
+import pl.fastus.spacestation.domain.dto.IssPosition;
+import pl.fastus.spacestation.domain.dto.Request;
+import pl.fastus.spacestation.domain.dto.Response;
+import pl.fastus.spacestation.domain.dto.StationNowDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +46,7 @@ class StationMapperTest {
         responses.add( response );
 
 
-        final IssPassesRequest converted = mapper.requestToPassesRequest( request, responses );
+        final IssPassesRequest converted = mapper.toIssPassesRequest( request, responses );
         converted.getResponses().forEach( System.out::println );
 
 
@@ -65,12 +65,12 @@ class StationMapperTest {
                 .latitude( LATITUDE )
                 .longitude( LONGITUDE ).build();
 
-        ApiNow apiNow = ApiNow.builder()
+        StationNowDTO stationNowDTO = StationNowDTO.builder()
                 .message( "message" )
                 .timestamp( DAY_TIME )
                 .issPosition( issPosition ).build();
 
-        final StationNow stationNow = mapper.convertFromApiNow( apiNow );
+        final StationNow stationNow = mapper.toStationNow( stationNowDTO );
 
         assertAll( ()->assertEquals( DAY_TIME, stationNow.getTimeStamp() ),
                    ()->assertEquals( LONGITUDE, stationNow.getPosition().getLongitude()),

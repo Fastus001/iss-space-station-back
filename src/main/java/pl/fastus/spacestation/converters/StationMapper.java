@@ -5,9 +5,9 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import pl.fastus.spacestation.domain.IssPassesRequest;
 import pl.fastus.spacestation.domain.StationNow;
-import pl.fastus.spacestation.domain.apinow.ApiNow;
-import pl.fastus.spacestation.domain.apipass.Request;
-import pl.fastus.spacestation.domain.apipass.Response;
+import pl.fastus.spacestation.domain.dto.Request;
+import pl.fastus.spacestation.domain.dto.Response;
+import pl.fastus.spacestation.domain.dto.StationNowDTO;
 
 import java.util.List;
 
@@ -20,12 +20,12 @@ public interface StationMapper {
             @Mapping( target = "responses.duration", source = "responses"),
             @Mapping( target = "responses.risetime", source = "responses")
     } )
-    IssPassesRequest requestToPassesRequest(Request source, List<Response> responses);
+    IssPassesRequest toIssPassesRequest(Request source, List<Response> responses);
 
 
     @Mappings( {
             @Mapping( target = "position", source = "issPosition"),
             @Mapping( target = "timeStamp", source = "timestamp")
     } )
-    StationNow convertFromApiNow(ApiNow apiNow);
+    StationNow toStationNow(StationNowDTO stationNowDTO);
 }

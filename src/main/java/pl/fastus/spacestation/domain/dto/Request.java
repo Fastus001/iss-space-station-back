@@ -1,9 +1,11 @@
 
-package pl.fastus.spacestation.domain.apipass;
+package pl.fastus.spacestation.domain.dto;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Data
 public class Request {
 
