@@ -9,14 +9,14 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.client.RestTemplate;
 
 @ExtendWith(MockitoExtension.class)
-class IssServiceImplTest {
+class IssApiServiceImplTest {
     private static final int NUMBER_OF_PASSES = 10;
 
     @Mock
     RestTemplate restTemplate;
 
     @InjectMocks
-    IssServiceImpl service;
+    IssApiApiServiceImpl service;
 
 
 

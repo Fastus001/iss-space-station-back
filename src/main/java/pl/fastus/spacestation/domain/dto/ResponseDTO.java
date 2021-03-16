@@ -7,9 +7,10 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-public class Response {
+public class ResponseDTO {
 
     @JsonProperty("risetime")
     private Long riseTime;
+
     private Integer duration;
 }

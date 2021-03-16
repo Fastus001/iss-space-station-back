@@ -24,7 +24,7 @@
                     <h1 class="panel-title">Pass Times Request Data</h1>
                 </div>
                 <div class="panel-body">
-                    <div class="table">
+                    <div class="table-responsive" >
                         <table class="table table-hover">
                             <thead class="thead-invers">
                             <tr>
@@ -63,10 +63,10 @@
                                 <th>Date</th>
                             </tr>
                             </thead>
-                            <tr th:each = "response : ${issPassRequest.responses}">
-                                <td th:text="${response.duration}">duration</td>
-                                <td th:text="${response.riseTime}">time stamp</td>
-                                <td th:text="${#dates.format(response.riseTime * 1000, 'dd-MM-yyyy HH:mm:ss')}">date</td>
+                            <tr th:each = "responseDTO : ${issPassRequest.respons}">
+                                <td th:text="${responseDTO.duration}">duration</td>
+                                <td th:text="${responseDTO.riseTime}">time stamp</td>
+                                <td th:text="${#dates.format(responseDTO.riseTime * 1000, 'dd-MM-yyyy HH:mm:ss')}">date</td>
                             </tr>
                         </table>
                     </div>

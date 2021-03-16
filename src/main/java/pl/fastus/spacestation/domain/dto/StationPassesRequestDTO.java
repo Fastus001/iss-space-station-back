@@ -11,6 +11,6 @@ import java.util.List;
 public class StationPassesRequestDTO {
 
     private String message;
-    private Request request;
-    private List<Response> response = null;
+    private RequestDTO requestDTO;
+    private List<ResponseDTO> responseDTO = null;
 }
