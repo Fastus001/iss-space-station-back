@@ -10,7 +10,7 @@ import pl.fastus.spacestation.domain.dto.StationNowDTO;
 public interface StationMapper {
 
     @Mappings( {
-            @Mapping( target = "position", source = "issPosition"),
+            @Mapping( target = "position", source = "issPositionDTO"),
             @Mapping( target = "timeStamp", source = "timestamp")
     } )
     StationNow stationNowDTOtoStationNow(StationNowDTO stationNowDTO);

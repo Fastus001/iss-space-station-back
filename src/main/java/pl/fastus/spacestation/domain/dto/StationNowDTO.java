@@ -13,14 +13,14 @@ import lombok.ToString;
 public class StationNowDTO {
 
     @JsonProperty("iss_position")
-    private IssPosition issPosition;
+    private IssPositionDTO issPositionDTO;
 
     private String message;
     private Long timestamp;
 
     @Builder
-    public StationNowDTO(IssPosition issPosition, String message, Long timestamp) {
-        this.issPosition = issPosition;
+    public StationNowDTO(IssPositionDTO issPositionDTO, String message, Long timestamp) {
+        this.issPositionDTO = issPositionDTO;
         this.message = message;
         this.timestamp = timestamp;
     }

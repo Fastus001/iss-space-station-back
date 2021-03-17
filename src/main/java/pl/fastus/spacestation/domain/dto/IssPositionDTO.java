@@ -9,13 +9,13 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @ToString
-public class IssPosition {
+public class IssPositionDTO {
 
     private Double latitude;
     private Double longitude;
 
     @Builder
-    public IssPosition(Double latitude, Double longitude) {
+    public IssPositionDTO(Double latitude, Double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
     }

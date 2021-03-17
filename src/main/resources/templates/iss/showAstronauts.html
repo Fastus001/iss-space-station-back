@@ -13,7 +13,7 @@
 
     <script type="text/javascript" th:src="@{/js/location.js}"></script>
 
-<body style="background-image: url('../resources/images/wallpaper.jpg')" th:object=${issPassRequest}>
+<body style="background-image: url('../resources/images/wallpaper.jpg')" th:object=${astronauts}>
 
 <div class="container" style="margin-top: 20px">
     <div class="row">
@@ -21,29 +21,19 @@
             <div class="panel panel-primary">
 
                 <div class="panel-heading">
-                    <h1 class="panel-title">Pass Times Request Data</h1>
+                    <h1 class="panel-title">Current number and names of Astronauts in Space</h1>
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive" >
                         <table class="table table-hover">
                             <thead class="thead-invers">
                             <tr>
-                                <th>Latitude</th>
-                                <th>Longitude</th>
-                                <th>Altitude</th>
-                                <th>Request date time</th>
-                                <th>Number of passes</th>
+                                <th>Number of peoples in space</th>
                             </tr>
                             </thead>
                             <tr>
-                                <td th:text="${issPassRequest.latitude}">latitude</td>
-                                <td th:text="${issPassRequest.longitude}">longitude</td>
-                                <td th:text="${issPassRequest.altitude}">altitude</td>
-<!--                                <td th:text="${issPassRequest.datetime}">date time</td>-->
-                                <td th:text="${#dates.format(issPassRequest.datetime * 1000, 'dd-MM-yyyy HH:mm:ss')}">Request date time</td>
-                                <td th:text="${issPassRequest.passes}">passes</td>
+                                <td th:text="${astronauts.number}">number</td>
                             </tr>
-
                         </table>
                     </div>
 
@@ -51,22 +41,20 @@
             </div>
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h4 class="panel-title">Next passes</h4>
+                    <h4 class="panel-title">Astronauts in space</h4>
                 </div>
                 <div class="panel-body">
                     <div class="table" style="background-color: #4ECEFB;">
                         <table class="table table-hover">
                             <thead class="thead-invers">
                             <tr >
-                                <th>Duration</th>
-                                <th>Time stamp</th>
-                                <th>Date</th>
+                                <th>Astronaut name</th>
+                                <th>Craft name</th>
                             </tr>
                             </thead>
-                            <tr th:each = "responseDTO : ${issPassRequest.responses}">
-                                <td th:text="${responseDTO.duration}">duration</td>
-                                <td th:text="${responseDTO.riseTime}">time stamp</td>
-                                <td th:text="${#dates.format(responseDTO.riseTime * 1000, 'dd-MM-yyyy HH:mm:ss')}">date</td>
+                            <tr th:each = "peoples : ${astronauts.people}">
+                                <td th:text="${peoples.name}">name</td>
+                                <td th:text="${peoples.craft}">craft</td>
                             </tr>
                         </table>
                     </div>

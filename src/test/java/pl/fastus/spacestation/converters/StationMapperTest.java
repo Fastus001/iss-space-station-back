@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 import pl.fastus.spacestation.domain.StationNow;
-import pl.fastus.spacestation.domain.dto.IssPosition;
+import pl.fastus.spacestation.domain.dto.IssPositionDTO;
 import pl.fastus.spacestation.domain.dto.StationNowDTO;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -26,14 +26,14 @@ class StationMapperTest {
 
     @Test
     void convertFromApiNowTest(){
-        IssPosition issPosition = IssPosition.builder()
+        IssPositionDTO issPositionDTO = IssPositionDTO.builder()
                 .latitude( LATITUDE )
                 .longitude( LONGITUDE ).build();
 
         StationNowDTO stationNowDTO = StationNowDTO.builder()
                 .message( "message" )
                 .timestamp( DAY_TIME )
-                .issPosition( issPosition ).build();
+                .issPositionDTO( issPositionDTO ).build();
 
         final StationNow stationNow = mapper.stationNowDTOtoStationNow( stationNowDTO );
 

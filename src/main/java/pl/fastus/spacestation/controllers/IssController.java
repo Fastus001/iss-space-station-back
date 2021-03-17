@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import pl.fastus.spacestation.commands.PassTimesCommand;
 import pl.fastus.spacestation.domain.IssPassesRequest;
 import pl.fastus.spacestation.domain.StationNow;
+import pl.fastus.spacestation.domain.dto.AstronautsDTO;
 import pl.fastus.spacestation.services.IssApiService;
 import pl.fastus.spacestation.services.IssPassesRequestService;
 import pl.fastus.spacestation.services.StationNowService;
@@ -42,6 +43,7 @@ public class IssController {
     @RequestMapping({"iss/show", "iss/showlocation"})
     public String show(Model model){
         final StationNow stationNow = issApiService.getIssNow();
+
         model.addAttribute( "stationNow", stationNowService.save( stationNow));
         return "iss/show";
     }
@@ -70,5 +72,13 @@ public class IssController {
         model.addAttribute( "issPassRequest",savedIssPassesRequest);
 
         return "iss/showPassTimes";
+    }
+
+    @RequestMapping("/iss/astronauts")
+    public String showAstronautsInSpace(Model model){
+        final AstronautsDTO astronauts = issApiService.getAstronauts();
+        model.addAttribute( "astronauts", astronauts );
+
+        return "iss/showAstronauts";
     }
 }

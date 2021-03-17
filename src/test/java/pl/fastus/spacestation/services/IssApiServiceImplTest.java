@@ -25,7 +25,7 @@ class IssApiServiceImplTest {
 
     public static MockWebServer mockWebServer;
 
-    IssApiApiServiceImpl service;
+    IssApiServiceImpl service;
 
     ObjectMapper objectMapper;
 
@@ -43,13 +43,13 @@ class IssApiServiceImplTest {
     @BeforeEach
     void setService(){
         String baseUrl =  String.format( "http://localhost:%s", mockWebServer.getPort() );
-        service = new IssApiApiServiceImpl( baseUrl, baseUrl );
+        service = new IssApiServiceImpl( baseUrl, baseUrl, baseUrl );
         objectMapper = new ObjectMapper();
     }
 
     @Test
     void getIssNowTest() throws JsonProcessingException {
-        IssPosition position= new IssPosition(25.25,20.20);
+        IssPositionDTO position= new IssPositionDTO( 25.25, 20.20);
         StationNowDTO mockStationNowDTO = new StationNowDTO(position, "message",123456L);
 
         mockWebServer.enqueue( new MockResponse().setBody( objectMapper.writeValueAsString( mockStationNowDTO ) )
@@ -97,4 +97,29 @@ class IssApiServiceImplTest {
         return multiValueMap;
     }
 
+
+    @Test
+    void getAstronauts() throws JsonProcessingException {
+        PeopleDTO people1 = new PeopleDTO();
+        people1.setName( "Name" );
+        people1.setCraft( "Craft" );
+
+        PeopleDTO people2 = new PeopleDTO();
+        people2.setName( "Name" );
+        people2.setCraft( "Craft" );
+
+        AstronautsDTO astronautsDTO = new AstronautsDTO();
+        astronautsDTO.setNumber( 2 );
+        astronautsDTO.setMessage( "message" );
+        astronautsDTO.setPeople( List.of(people1, people2) );
+
+        mockWebServer.enqueue( new MockResponse().setBody( objectMapper.writeValueAsString( astronautsDTO ) )
+                                       .addHeader( "Content-Type", "application/json" ));
+
+        final AstronautsDTO astronauts = service.getAstronauts();
+
+        assertNotNull(astronauts);
+        assertEquals( 2, astronauts.getNumber() );
+        assertEquals( 2, astronauts.getPeople().size());
+    }
 }
