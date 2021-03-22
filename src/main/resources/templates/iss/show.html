@@ -21,9 +21,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 
-    <script type="text/javascript" th:src="@{/js/location.js}"></script>
 
-<body style="background-image: url('../resources/images/wallpaper.jpg')" th:object=${stationNow}>
+<!--    th:object=${stationNow}-->
+<body style="background-image: url('../resources/images/wallpaper.jpg')" >
 <div th:insert = "~{fragments/header}"></div>
 <div class="container">
     <div class="container">
@@ -36,12 +36,8 @@
              class="leaflet-container leaflet-touch leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom"
              tabindex="0">
         </div>
-        <script th:inline="javascript">
-                var longitude = /*[[${stationNow.getPosition().longitude}]]*/;
-                var latitude = /*[[${stationNow.getPosition().latitude}]]*/;
-                showStationLocation(latitude,longitude);
-            </script>
-
+        <script src="http://code.jquery.com/jquery-2.0.3.min.js"> </script>
+        <script type="text/javascript" th:src="@{/js/location.js}"></script>
     </div>
 </div>
 </body>

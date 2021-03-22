@@ -11,7 +11,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.bind.WebDataBinder;
 import pl.fastus.spacestation.domain.IssPassesRequest;
-import pl.fastus.spacestation.domain.StationNow;
 import pl.fastus.spacestation.domain.dto.AstronautsDTO;
 import pl.fastus.spacestation.services.IssApiService;
 import pl.fastus.spacestation.services.IssPassesRequestService;
@@ -53,17 +52,11 @@ class IssControllerTest {
 
     @Test
     void show() throws Exception {
-        final StationNow returnedStationNow = StationNow.builder().id( 1L ).build();
-        when( issApiService.getIssNow()).thenReturn( returnedStationNow);
-        when( stationNowService.save( any() ) ).thenReturn( returnedStationNow);
 
         mockMvc.perform( get("/iss/show") )
                 .andExpect( status().isOk() )
-                .andExpect( view().name( "iss/show" ) )
-                .andExpect( model().attributeExists( "stationNow" ) );
+                .andExpect( view().name( "iss/show" ) );
 
-        verify( issApiService, times( 1 ) ).getIssNow();
-        verify( stationNowService, times( 1 ) ).save( any() );
     }
 
     @Test

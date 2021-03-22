@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import pl.fastus.spacestation.domain.IssPassesRequest;
-import pl.fastus.spacestation.domain.StationNow;
 import pl.fastus.spacestation.domain.dto.*;
 
 import java.io.IOException;
@@ -43,24 +42,8 @@ class IssApiServiceImplTest {
     @BeforeEach
     void setService(){
         String baseUrl =  String.format( "http://localhost:%s", mockWebServer.getPort() );
-        service = new IssApiServiceImpl( baseUrl, baseUrl, baseUrl );
+        service = new IssApiServiceImpl(baseUrl, baseUrl );
         objectMapper = new ObjectMapper();
-    }
-
-    @Test
-    void getIssNowTest() throws JsonProcessingException {
-        IssPositionDTO position= new IssPositionDTO( 25.25, 20.20);
-        StationNowDTO mockStationNowDTO = new StationNowDTO(position, "message",123456L);
-
-        mockWebServer.enqueue( new MockResponse().setBody( objectMapper.writeValueAsString( mockStationNowDTO ) )
-                                        .addHeader( "Content-Type", "application/json" ));
-
-        final StationNow issNow = service.getIssNow();
-
-        System.out.println( "issNow = " + issNow );
-        assertNotNull(issNow);
-        assertEquals( 25.25, issNow.getPosition().getLatitude() );
-        assertEquals( 123456, issNow.getTimeStamp() );
     }
 
     @Test
