@@ -1,4 +1,4 @@
-package pl.fastus.spacestation.converters;
+package pl.fastus.spacestation.mappers;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

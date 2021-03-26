@@ -8,11 +8,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import pl.fastus.spacestation.commands.PassTimesCommand;
-import pl.fastus.spacestation.converters.StationMapper;
 import pl.fastus.spacestation.domain.IssPassesRequest;
 import pl.fastus.spacestation.domain.StationNow;
 import pl.fastus.spacestation.domain.dto.AstronautsDTO;
 import pl.fastus.spacestation.domain.dto.StationNowDTO;
+import pl.fastus.spacestation.mappers.StationMapper;
 import pl.fastus.spacestation.services.IssApiService;
 import pl.fastus.spacestation.services.IssPassesRequestService;
 import pl.fastus.spacestation.services.StationNowService;
@@ -45,13 +45,6 @@ public class IssController {
         return "iss/show";
     }
 
-    @PostMapping(path = "/iss/now", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody StationNow getStationNow(@RequestBody StationNowDTO stationNowDTO){
-        System.out.println( "stationNowDTO = " + stationNowDTO );
-        return stationNowService.save( StationMapper.INSTANCE.stationNowDTOtoStationNow(stationNowDTO ));
-    }
-
-
     @RequestMapping("/iss/passTimes")
     public String passTimes(Model model){
         model.addAttribute( "passTimes", new PassTimesCommand() );
@@ -79,10 +72,18 @@ public class IssController {
     }
 
     @RequestMapping("/iss/astronauts")
-    public String showAstronautsInSpace(Model model){
-        final AstronautsDTO astronauts = issApiService.getAstronauts();
-        model.addAttribute( "astronauts", astronauts );
-
+    public String showAstronautsInSpace(){
         return "iss/showAstronauts";
+    }
+
+    @PostMapping(path = "/iss/now", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody StationNow createStationNow(@RequestBody StationNowDTO stationNowDTO){
+        return stationNowService.save( StationMapper.INSTANCE.stationNowDTOtoStationNow(stationNowDTO ));
+    }
+
+    @PostMapping(path = "/iss/peoples", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody void createPeoplesInSpace(@RequestBody AstronautsDTO astronautsDTO){
+        System.out.println( "astronautsDTO = " + astronautsDTO );
+        //Todo - save astronauts
     }
 }

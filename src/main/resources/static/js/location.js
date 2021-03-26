@@ -1,4 +1,4 @@
-var map = L.map('mapid').setView([0,0], 2);
+var map = L.map('mapid').setView([0,0], 3);
 
 
 function moveISS () {

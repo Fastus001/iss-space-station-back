@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriBuilder;
-import pl.fastus.spacestation.converters.IssPassesMapper;
 import pl.fastus.spacestation.domain.IssPassesRequest;
 import pl.fastus.spacestation.domain.dto.AstronautsDTO;
 import pl.fastus.spacestation.domain.dto.StationPassesRequestDTO;
+import pl.fastus.spacestation.mappers.IssPassesMapper;
 import reactor.core.publisher.Mono;
 
 @Service

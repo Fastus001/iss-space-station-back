@@ -1,4 +1,4 @@
-package pl.fastus.spacestation.converters;
+package pl.fastus.spacestation.mappers;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

@@ -11,7 +11,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.bind.WebDataBinder;
 import pl.fastus.spacestation.domain.IssPassesRequest;
-import pl.fastus.spacestation.domain.dto.AstronautsDTO;
 import pl.fastus.spacestation.services.IssApiService;
 import pl.fastus.spacestation.services.IssPassesRequestService;
 import pl.fastus.spacestation.services.StationNowService;
@@ -84,14 +83,9 @@ class IssControllerTest {
 
     @Test
     void showAstronautsInSpace() throws Exception {
-        AstronautsDTO astronautsToReturn = new AstronautsDTO();
-        when( issApiService.getAstronauts() ).thenReturn( astronautsToReturn );
 
         mockMvc.perform( get( "/iss/astronauts" ) )
                 .andExpect( status().isOk() )
-                .andExpect( view().name( "iss/showAstronauts" ) )
-                .andExpect( model().attributeExists( "astronauts" ) );
-
-        verify( issApiService,times( 1 ) ).getAstronauts();
+                .andExpect( view().name( "iss/showAstronauts" ) );
     }
 }
