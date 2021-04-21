@@ -55,7 +55,6 @@ class IssControllerTest {
         mockMvc.perform( get("/iss/show") )
                 .andExpect( status().isOk() )
                 .andExpect( view().name( "iss/show" ) );
-
     }
 
     @Test
@@ -87,5 +86,13 @@ class IssControllerTest {
         mockMvc.perform( get( "/iss/astronauts" ) )
                 .andExpect( status().isOk() )
                 .andExpect( view().name( "iss/showAstronauts" ) );
+    }
+
+    @Test
+    void createStationNow() {
+    }
+
+    @Test
+    void createPeoplesInSpace() {
     }
 }

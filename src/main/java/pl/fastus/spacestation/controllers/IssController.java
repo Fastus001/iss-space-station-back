@@ -2,11 +2,11 @@ package pl.fastus.spacestation.controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import pl.fastus.spacestation.commands.PassRequest;
 import pl.fastus.spacestation.commands.PassTimesCommand;
 import pl.fastus.spacestation.domain.IssPassesRequest;
 import pl.fastus.spacestation.domain.StationNow;
@@ -17,8 +17,10 @@ import pl.fastus.spacestation.services.IssApiService;
 import pl.fastus.spacestation.services.IssPassesRequestService;
 import pl.fastus.spacestation.services.StationNowService;
 
+import javax.validation.Valid;
+
 @Slf4j
-@Controller
+@RestController
 public class IssController {
     private static final String ISS_PASS_TIMES_FORM = "iss/passtimesform";
 
@@ -49,6 +51,11 @@ public class IssController {
     public String passTimes(Model model){
         model.addAttribute( "passTimes", new PassTimesCommand() );
         return ISS_PASS_TIMES_FORM;
+    }
+    @PostMapping("/api/iss/passTimes")
+    @ResponseBody public PassRequest getPassesRequest(@Valid @RequestBody PassRequest body){
+        System.out.println("allParams = " + body);
+        return body;
     }
 
     @PostMapping("passTimes")

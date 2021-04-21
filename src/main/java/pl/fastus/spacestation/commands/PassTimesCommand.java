@@ -1,9 +1,6 @@
 package pl.fastus.spacestation.commands;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
@@ -13,10 +10,7 @@ import java.util.List;
 
 import static java.lang.String.valueOf;
 
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
+@Data
 public class PassTimesCommand {
 
     @DecimalMin( value = "-80.0")
@@ -31,11 +25,11 @@ public class PassTimesCommand {
 
     @Min( 0 )
     @Max( 10000 )
-    private Integer altitude;
+    private BigDecimal altitude;
 
     @Min( 1 )
     @Max( 100 )
-    private Integer numberOfPasses;
+    private BigDecimal number;
 
     public MultiValueMap<String, String> getUriParams(){
         MultiValueMap<String, String> temp = new LinkedMultiValueMap<>();
@@ -45,8 +39,8 @@ public class PassTimesCommand {
         if(altitude!=null){
             temp.put( "alt", List.of( valueOf( altitude ) ) );
         }
-        if ( numberOfPasses !=null ){
-            temp.put( "n", List.of( valueOf( numberOfPasses ) ) );
+        if ( number !=null ){
+            temp.put( "n", List.of( valueOf(number) ) );
         }
         return temp;
     }
