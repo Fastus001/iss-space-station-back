@@ -1,7 +1,15 @@
 package pl.fastus.spacestation.services;
 
-import pl.fastus.spacestation.domain.IssPasses;
+import org.springframework.stereotype.Service;
+import pl.fastus.spacestation.repositories.IssPassesRepository;
 
-public interface IssPassesService extends CrudService<IssPasses,Long> {
+@Service
+public class IssPassesService {
+
+    private final IssPassesRepository repository;
+
+    public IssPassesService(IssPassesRepository repository) {
+        this.repository = repository;
+    }
 
 }

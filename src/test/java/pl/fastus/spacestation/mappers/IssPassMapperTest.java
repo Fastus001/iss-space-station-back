@@ -12,7 +12,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class IssPassesMapperTest {
+class IssPassMapperTest {
     private static final double LATITUDE = 25.2;
     private static final double LONGITUDE = 12.1;
     private static final int PASSES = 5;

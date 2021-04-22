@@ -9,7 +9,6 @@ import javax.persistence.OneToOne;
 @NoArgsConstructor
 @EqualsAndHashCode(exclude = "stationNow", callSuper = false)
 @ToString(exclude = "stationNow")
-
 @Entity
 public class Position extends BaseEntity{
 

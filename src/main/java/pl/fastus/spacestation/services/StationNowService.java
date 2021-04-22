@@ -1,9 +1,9 @@
 package pl.fastus.spacestation.services;
 
-import org.springframework.stereotype.Service;
 import pl.fastus.spacestation.domain.StationNow;
+import pl.fastus.spacestation.domain.dto.StationNowDTO;
 
+public interface StationNowService{
 
-@Service
-public interface StationNowService extends CrudService<StationNow, Long>{
+    StationNow save(StationNowDTO stationNowToSave);
 }

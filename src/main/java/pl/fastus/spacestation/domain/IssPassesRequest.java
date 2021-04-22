@@ -1,21 +1,24 @@
 package pl.fastus.spacestation.domain;
 
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = "responses", callSuper = false)
+@ToString
+@EqualsAndHashCode(exclude = "responses")
 @Entity
-public class IssPassesRequest  extends BaseEntity{
+public class IssPassesRequest{
+
+    @Id
+    @GeneratedValue
+    private Long id;
 
     private double latitude;
     private double longitude;
@@ -23,7 +26,7 @@ public class IssPassesRequest  extends BaseEntity{
     private Integer passes;
     private Long datetime;
 
-    @OrderBy("sort")
-    @OneToMany(mappedBy = "issPassesRequest",cascade = CascadeType.ALL)
-    private SortedSet<IssPasses> responses = new TreeSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<IssPass> responses = new HashSet<>();
 }
