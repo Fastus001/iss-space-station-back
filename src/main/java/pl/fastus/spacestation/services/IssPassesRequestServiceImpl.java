@@ -19,16 +19,16 @@ public class IssPassesRequestServiceImpl implements IssPassesRequestService {
 
     private final IssPassesRequestRepository repository;
     private final IssApiService apiService;
-    private final IssPassesMapper issPassesMapper;
+    private final IssPassesMapper passesMapper;
 
     @Override
     public StationPassesRequestDTO saveDTO(PassesRequestDTO toSave) {
         StationPassesRequestDTO callback = apiService.createPassesRequest(PassesRequestParamMapper
                 .getUriParams(toSave)).block();
         assert callback != null;
-        IssPassesRequest issPassesRequest = issPassesMapper.toIssPassesRequest(callback.getRequestDTO(), callback.getResponseDTO());
+        IssPassesRequest issPassesRequest = passesMapper.toIssPassesRequest(callback.getRequestDTO(), callback.getResponseDTO());
         IssPassesRequest issPassesSaved = repository.save(issPassesRequest);
-        return issPassesMapper.IssPassesRequestToStationPassesRequestDTO(issPassesSaved);
+        return passesMapper.IssPassesRequestToStationPassesRequestDTO(issPassesSaved);
     }
 
     @Override
@@ -38,6 +38,6 @@ public class IssPassesRequestServiceImpl implements IssPassesRequestService {
             throw new IllegalArgumentException();
         }
         IssPassesRequest request = optionalIssPasses.get();
-        return issPassesMapper.IssPassesRequestToStationPassesRequestDTO(request);
+        return passesMapper.IssPassesRequestToStationPassesRequestDTO(request);
     }
 }

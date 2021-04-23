@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import pl.fastus.spacestation.services.AstronautServiceImpl;
 import pl.fastus.spacestation.services.IssPassesRequestService;
 import pl.fastus.spacestation.services.StationNowService;
 
@@ -19,6 +20,9 @@ class IssControllerTest {
     @Mock
     StationNowService stationNowService;
 
+    @Mock
+    AstronautServiceImpl astronautService;
+
 
     @InjectMocks
     IssController issController;
@@ -27,7 +31,7 @@ class IssControllerTest {
 
     @BeforeEach
     void setUp() {
-        issController = new IssController(  issPassesRequestService, stationNowService );
+        issController = new IssController(  issPassesRequestService, stationNowService, astronautService );
 
         mockMvc = MockMvcBuilders.standaloneSetup( issController ).build();
     }

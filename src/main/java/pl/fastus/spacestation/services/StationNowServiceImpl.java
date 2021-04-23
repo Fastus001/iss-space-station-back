@@ -14,10 +14,11 @@ import pl.fastus.spacestation.repositories.StationNowRepository;
 public class StationNowServiceImpl implements StationNowService{
 
     private final StationNowRepository repository;
+    private final StationMapper mapper;
 
     @Override
     public StationNow save(StationNowDTO stationNowDTO) {
-        StationNow stationNow = StationMapper.INSTANCE.stationNowDTOtoStationNow(stationNowDTO);
+        StationNow stationNow = mapper.stationNowDTOtoStationNow(stationNowDTO);
         return repository.save(stationNow);
     }
 }
