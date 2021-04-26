@@ -10,9 +10,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import pl.fastus.spacestation.domain.dto.PassesRequestDTO;
-import pl.fastus.spacestation.domain.dto.RequestDTO;
-import pl.fastus.spacestation.domain.dto.StationPassesRequestDTO;
+import pl.fastus.spacestation.domain.StationNow;
+import pl.fastus.spacestation.domain.dto.*;
 import pl.fastus.spacestation.services.IssPassesRequestService;
 import pl.fastus.spacestation.services.StationNowService;
 
@@ -23,6 +22,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -96,46 +96,49 @@ class IssControllerTest {
         verify(issPassesRequestService, times(0)).saveDTO(any());
     }
 
+    @Test
+    void getPassesRequestById() throws Exception {
+        RequestDTO requestDTO = new RequestDTO();
+        requestDTO.setLongitude(1D);
 
+        StationPassesRequestDTO savedRequest = new StationPassesRequestDTO();
+        savedRequest.setMessage("success");
+        savedRequest.setRequestDTO(requestDTO);
 
-//    @Test
-//    void show() throws Exception {
-//
-//        mockMvc.perform( get("/iss/show") )
-//                .andExpect( status().isOk() )
-//                .andExpect( view().name( "iss/show" ) );
-//    }
+        given(issPassesRequestService.findById(any())).willReturn(savedRequest);
 
-//    @Test
-//    public void showPassTimes() throws Exception {
-//        IssPassesRequest request = new IssPassesRequest();
-//        IssPassesRequest savedRequest = new IssPassesRequest();
-//
-//        when( issApiService.createPassesRequest( any() ) ).thenReturn( Mono.just(request) );
-//        when( issPassesRequestService.save( request ) ).thenReturn( savedRequest );
-//
-//        mockMvc.perform(post("/passTimes")
-//                .contentType( MediaType.APPLICATION_FORM_URLENCODED )
-//                .param( "latitude", "20.0" )
-//                .param( "longitude", "-25.0" )
-//                .param( "altitude", "100" )
-//                .param( "numberOfPasses","3" ))
-//                .andExpect(status().isOk())
-//                .andExpect(view().name("iss/showPassTimes"))
-//                .andExpect(model().attributeExists("issPassRequest"));
-//
-//        verify( issApiService,times( 1 ) ).createPassesRequest( any() );
-//        verify( issPassesRequestService,times( 1 ) ).save( any() );
-//    }
-//
-//
-//    @Test
-//    void showAstronautsInSpace() throws Exception {
-//
-//        mockMvc.perform( get( "/iss/astronauts" ) )
-//                .andExpect( status().isOk() )
-//                .andExpect( view().name( "iss/showAstronauts" ) );
-//    }
+        mockMvc.perform(get("/api/iss/passTimes/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message",is("success")))
+                .andExpect(jsonPath("$.request.longitude", is(1.0)));
+    }
+
+    @Test
+    void saveStationLocation() throws Exception {
+        StationNowDTO stationNowDTO = new StationNowDTO();
+        stationNowDTO.setMessage("success");
+        stationNowDTO.setTimestamp(123456L);
+        stationNowDTO.setIssPositionDTO(new IssPositionDTO(25.25,50.20));
+
+        StationNow stationNow = new StationNow();
+        stationNow.setId(1L);
+        stationNow.setLatitude(25.25);
+        stationNow.setLongitude(50.20);
+        stationNow.setTimeStamp(123456L);
+
+        given(stationNowService.save(any(StationNowDTO.class))).willReturn(stationNow);
+
+        mockMvc.perform(post("/api/iss/location")
+                    .content(asJsonString(stationNowDTO))
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isCreated())
+                    .andExpect(jsonPath("$.latitude", is(25.25)))
+                    .andExpect(jsonPath("$.longitude", is(50.20)))
+                    .andExpect(jsonPath("$.timeStamp", is(123456)));
+
+        verify(stationNowService, times(1)).save(any());
+    }
 
     public static String asJsonString(final Object obj) {
         try {
