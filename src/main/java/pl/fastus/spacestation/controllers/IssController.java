@@ -14,6 +14,7 @@ import pl.fastus.spacestation.services.StationNowService;
 import javax.validation.Valid;
 
 @Slf4j
+@CrossOrigin(allowedHeaders = "*",origins = "*", methods = {RequestMethod.POST})
 @RequiredArgsConstructor
 @RequestMapping("/api/iss")
 @RestController

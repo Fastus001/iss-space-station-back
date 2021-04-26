@@ -53,10 +53,8 @@ class IssControllerTest {
     void getPassesRequest() throws Exception {
         //given
         PassesRequestDTO body = new PassesRequestDTO();
-        body.setLongitude(BigDecimal.ONE);
-        body.setLatitude(BigDecimal.ONE);
-        body.setNumber(BigDecimal.ONE);
-        body.setAltitude(BigDecimal.ONE);
+        body.setLongitude(BigDecimal.valueOf(179.999));
+        body.setLatitude(BigDecimal.valueOf(-79.9999));
 
         RequestDTO requestDTO = new RequestDTO();
         requestDTO.setLongitude(1D);
@@ -77,6 +75,25 @@ class IssControllerTest {
 
         //then
         verify(issPassesRequestService, times(1)).saveDTO(any());
+    }
+
+    @Test
+    void passesRequestShouldFailBecauseOfValidationConstrains() throws Exception {
+        //given
+        PassesRequestDTO body = new PassesRequestDTO();
+        body.setLongitude(BigDecimal.ONE);
+        body.setLatitude(BigDecimal.valueOf(80.001));
+        body.setNumber(BigDecimal.ONE);
+        body.setAltitude(BigDecimal.ONE);
+
+        mockMvc.perform(post("/api/iss/passTimes")
+                .content(asJsonString(body))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError());
+
+
+        verify(issPassesRequestService, times(0)).saveDTO(any());
     }
 
 
