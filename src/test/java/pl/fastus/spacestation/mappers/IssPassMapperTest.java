@@ -2,8 +2,6 @@ package pl.fastus.spacestation.mappers;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import pl.fastus.spacestation.domain.IssPassesRequest;
 import pl.fastus.spacestation.domain.dto.RequestDTO;
 import pl.fastus.spacestation.domain.dto.ResponseDTO;
@@ -14,7 +12,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
 class IssPassMapperTest {
     private static final double LATITUDE = 25.2;
     private static final double LONGITUDE = 12.1;
@@ -22,11 +19,11 @@ class IssPassMapperTest {
     private static final int ALTITUDE = 1500;
     private static final long DAY_TIME = 123456L;
 
-    @Autowired
     IssPassesMapper mapper;
 
     @BeforeEach
     void setUp() {
+        mapper = new IssPassesMapperImpl();
     }
 
     @Test
