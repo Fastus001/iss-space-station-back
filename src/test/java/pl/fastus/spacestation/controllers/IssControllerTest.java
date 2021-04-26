@@ -13,7 +13,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import pl.fastus.spacestation.domain.dto.PassesRequestDTO;
 import pl.fastus.spacestation.domain.dto.RequestDTO;
 import pl.fastus.spacestation.domain.dto.StationPassesRequestDTO;
-import pl.fastus.spacestation.services.AstronautServiceImpl;
 import pl.fastus.spacestation.services.IssPassesRequestService;
 import pl.fastus.spacestation.services.StationNowService;
 
@@ -38,10 +37,6 @@ class IssControllerTest {
     @Mock
     StationNowService stationNowService;
 
-    @Mock
-    AstronautServiceImpl astronautService;
-
-
     @InjectMocks
     IssController issController;
 
@@ -49,7 +44,7 @@ class IssControllerTest {
 
     @BeforeEach
     void setUp() {
-        issController = new IssController(  issPassesRequestService, stationNowService, astronautService );
+        issController = new IssController(  issPassesRequestService, stationNowService);
 
         mockMvc = MockMvcBuilders.standaloneSetup( issController ).build();
     }
@@ -84,13 +79,6 @@ class IssControllerTest {
         verify(issPassesRequestService, times(1)).saveDTO(any());
     }
 
-    public static String asJsonString(final Object obj) {
-        try {
-            return new ObjectMapper().writeValueAsString(obj);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 
 
 //    @Test
@@ -132,4 +120,11 @@ class IssControllerTest {
 //                .andExpect( view().name( "iss/showAstronauts" ) );
 //    }
 
+    public static String asJsonString(final Object obj) {
+        try {
+            return new ObjectMapper().writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
