@@ -6,27 +6,27 @@ import org.springframework.stereotype.Service;
 import pl.fastus.spacestation.domain.IssPassesRequest;
 import pl.fastus.spacestation.domain.dto.StationPassesRequestDTO;
 import pl.fastus.spacestation.mappers.IssPassesMapper;
-import pl.fastus.spacestation.repositories.IssPassesRequestRepository;
+import pl.fastus.spacestation.repositories.StationPassesRequestRepository;
 
 import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class IssPassesRequestService {
+public class StationPassesRequestService {
 
-    private final IssPassesRequestRepository repository;
+    private final StationPassesRequestRepository repository;
     private final IssPassesMapper passesMapper;
 
-    public StationPassesRequestDTO saveDTO(StationPassesRequestDTO toSave) {
-        IssPassesRequest issPassesRequest = passesMapper.toIssPassesRequest(toSave.getRequestDTO(), toSave.getResponseDTO());
+    public StationPassesRequestDTO saveStationPassRequest(StationPassesRequestDTO toSave) {
+        IssPassesRequest issPassesRequest = passesMapper.toIssPassesRequest(toSave);
 
         IssPassesRequest issPassesSaved = repository.save(issPassesRequest);
 
         return passesMapper.issPassesRequestToStationPassesRequestDTO(issPassesSaved);
     }
 
-    public StationPassesRequestDTO findById(Long id) {
+    public StationPassesRequestDTO findStationPassRequestById(Long id) {
         Optional<IssPassesRequest> optionalIssPasses = repository.findById(id);
         if(optionalIssPasses.isEmpty()){
             throw new IllegalArgumentException();

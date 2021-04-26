@@ -9,10 +9,10 @@ import pl.fastus.spacestation.domain.dto.StationPassesRequestDTO;
 import reactor.core.publisher.Mono;
 
 @Service
-public class IssApiService {
+public class StationWebClientService {
     private final String apiPass;
 
-    public IssApiService(@Value("${api.pass}") String apiPass) {
+    public StationWebClientService(@Value("${api.pass}") String apiPass) {
         this.apiPass = apiPass;
     }
 

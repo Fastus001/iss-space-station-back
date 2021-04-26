@@ -12,9 +12,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import pl.fastus.spacestation.domain.StationNow;
 import pl.fastus.spacestation.domain.dto.*;
-import pl.fastus.spacestation.services.IssApiService;
-import pl.fastus.spacestation.services.IssPassesRequestService;
-import pl.fastus.spacestation.services.StationNowService;
+import pl.fastus.spacestation.services.StationLocationService;
+import pl.fastus.spacestation.services.StationPassesRequestService;
+import pl.fastus.spacestation.services.StationWebClientService;
 import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
@@ -31,27 +31,27 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @ExtendWith(MockitoExtension.class)
-class IssControllerTest {
+class StationControllerTest {
 
     @Mock
-    IssPassesRequestService issPassesRequestService;
+    StationPassesRequestService stationPassesRequestService;
 
     @Mock
-    StationNowService stationNowService;
+    StationLocationService stationLocationService;
 
     @Mock
-    IssApiService issApiService;
+    StationWebClientService stationWebClientService;
 
     @InjectMocks
-    IssController issController;
+    StationController stationController;
 
     MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {
-        issController = new IssController(  issPassesRequestService, stationNowService, issApiService);
+        stationController = new StationController(stationPassesRequestService, stationLocationService, stationWebClientService);
 
-        mockMvc = MockMvcBuilders.standaloneSetup( issController ).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(stationController).build();
     }
 
     @Test
@@ -68,8 +68,8 @@ class IssControllerTest {
         savedRequest.setMessage("success");
         savedRequest.setRequestDTO(requestDTO);
 
-        given(issApiService.createPassesRequest(any())).willReturn(Mono.just(savedRequest));
-        given(issPassesRequestService.saveDTO(any(StationPassesRequestDTO.class))).willReturn(savedRequest);
+        given(stationWebClientService.createPassesRequest(any())).willReturn(Mono.just(savedRequest));
+        given(stationPassesRequestService.saveStationPassRequest(any(StationPassesRequestDTO.class))).willReturn(savedRequest);
         //when
         mockMvc.perform(post("/api/iss/passTimes")
                 .content(asJsonString(body))
@@ -80,8 +80,8 @@ class IssControllerTest {
                 .andExpect(jsonPath("$.request.longitude", is(1.0)));
 
         //then
-        verify(issPassesRequestService, times(1)).saveDTO(any());
-        verify(issApiService, times(1)).createPassesRequest(any());
+        verify(stationPassesRequestService, times(1)).saveStationPassRequest(any());
+        verify(stationWebClientService, times(1)).createPassesRequest(any());
     }
 
     @Test
@@ -98,7 +98,7 @@ class IssControllerTest {
                 .andExpect(status().is4xxClientError());
 
 
-        verify(issPassesRequestService, times(0)).saveDTO(any());
+        verify(stationPassesRequestService, times(0)).saveStationPassRequest(any());
     }
 
     @Test
@@ -110,7 +110,7 @@ class IssControllerTest {
         savedRequest.setMessage("success");
         savedRequest.setRequestDTO(requestDTO);
 
-        given(issPassesRequestService.findById(any())).willReturn(savedRequest);
+        given(stationPassesRequestService.findStationPassRequestById(any())).willReturn(savedRequest);
 
         mockMvc.perform(get("/api/iss/passTimes/1"))
                 .andExpect(status().isOk())
@@ -131,7 +131,7 @@ class IssControllerTest {
         stationNow.setLongitude(50.20);
         stationNow.setTimeStamp(123456L);
 
-        given(stationNowService.save(any(StationNowDTO.class))).willReturn(stationNow);
+        given(stationLocationService.save(any(StationNowDTO.class))).willReturn(stationNow);
 
         mockMvc.perform(post("/api/iss/location")
                     .content(asJsonString(stationNowDTO))
@@ -142,7 +142,7 @@ class IssControllerTest {
                     .andExpect(jsonPath("$.longitude", is(50.20)))
                     .andExpect(jsonPath("$.timeStamp", is(123456)));
 
-        verify(stationNowService, times(1)).save(any());
+        verify(stationLocationService, times(1)).save(any());
     }
 
     public static String asJsonString(final Object obj) {

@@ -9,9 +9,9 @@ import pl.fastus.spacestation.domain.dto.PassesRequestDTO;
 import pl.fastus.spacestation.domain.dto.StationNowDTO;
 import pl.fastus.spacestation.domain.dto.StationPassesRequestDTO;
 import pl.fastus.spacestation.mappers.PassesRequestParamMapper;
-import pl.fastus.spacestation.services.IssApiService;
-import pl.fastus.spacestation.services.IssPassesRequestService;
-import pl.fastus.spacestation.services.StationNowService;
+import pl.fastus.spacestation.services.StationLocationService;
+import pl.fastus.spacestation.services.StationPassesRequestService;
+import pl.fastus.spacestation.services.StationWebClientService;
 
 import javax.validation.Valid;
 
@@ -20,31 +20,31 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 @RequestMapping("/api/iss")
 @RestController
-public class IssController {
+public class StationController {
 
-    private final IssPassesRequestService issPassesRequestService;
-    private final StationNowService stationNowService;
-    private final IssApiService issApiService;
+    private final StationPassesRequestService stationPassesRequestService;
+    private final StationLocationService stationLocationService;
+    private final StationWebClientService stationWebClientService;
 
 
     @PostMapping("/passTimes")
     @ResponseStatus(HttpStatus.CREATED)
-    public StationPassesRequestDTO getPassesRequest(@Valid @RequestBody PassesRequestDTO body){
-        StationPassesRequestDTO passesRequestDTO = issApiService.createPassesRequest(PassesRequestParamMapper.getUriParams(body)).block();
+    public StationPassesRequestDTO getAndSavePassesRequest(@Valid @RequestBody PassesRequestDTO body){
+        StationPassesRequestDTO passesRequestDTO = stationWebClientService.createPassesRequest(PassesRequestParamMapper.getUriParams(body)).block();
         log.info("allParams = " + body);
-        return issPassesRequestService.saveDTO(passesRequestDTO);
+        return stationPassesRequestService.saveStationPassRequest(passesRequestDTO);
     }
 
     @GetMapping("/passTimes/{id}")
     public StationPassesRequestDTO getPassesRequestById(@PathVariable Long id){
-        return issPassesRequestService.findById(id);
+        return stationPassesRequestService.findStationPassRequestById(id);
     }
 
     @PostMapping("/location")
     @ResponseStatus(HttpStatus.CREATED)
     public StationNow saveStationLocation(@RequestBody StationNowDTO stationNowDTO){
         log.info("New location in controller to save " + stationNowDTO);
-        return stationNowService.save(stationNowDTO );
+        return stationLocationService.save(stationNowDTO );
     }
 
 }

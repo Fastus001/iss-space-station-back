@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 import pl.fastus.spacestation.domain.IssPassesRequest;
 import pl.fastus.spacestation.domain.dto.RequestDTO;
 import pl.fastus.spacestation.domain.dto.ResponseDTO;
+import pl.fastus.spacestation.domain.dto.StationPassesRequestDTO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -34,15 +34,17 @@ class IssPassMapperTest {
                 .passes( PASSES )
                 .altitude( ALTITUDE )
                 .dateTime( DAY_TIME ).build();
-        List<ResponseDTO> respons = new ArrayList<>();
 
         ResponseDTO responseDTO = new ResponseDTO();
         responseDTO.setDuration( 10 );
         responseDTO.setRiseTime( 12356L );
-        respons.add( responseDTO );
+
+        StationPassesRequestDTO request = new StationPassesRequestDTO();
+        request.setRequestDTO(requestDTO);
+        request.setResponseDTO(List.of(responseDTO));
 
 
-        final IssPassesRequest converted = mapper.toIssPassesRequest( requestDTO, respons );
+        final IssPassesRequest converted = mapper.toIssPassesRequest( request );
 
         assertAll( ()->assertEquals( LATITUDE, converted.getLatitude() ),
                    ()->assertEquals( LONGITUDE, converted.getLongitude()),

@@ -4,20 +4,20 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import pl.fastus.spacestation.domain.IssPassesRequest;
-import pl.fastus.spacestation.domain.dto.RequestDTO;
-import pl.fastus.spacestation.domain.dto.ResponseDTO;
 import pl.fastus.spacestation.domain.dto.StationPassesRequestDTO;
-
-import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface IssPassesMapper {
 
     @Mappings( {
-            @Mapping( target = "datetime", source = "source.dateTime"),
-            @Mapping( target = "responses.duration", source = "responses")
+            @Mapping( target = "datetime", source = "source.requestDTO.dateTime"),
+            @Mapping( target = "latitude", source = "source.requestDTO.latitude"),
+            @Mapping( target = "longitude", source = "source.requestDTO.longitude"),
+            @Mapping( target = "altitude", source = "source.requestDTO.altitude"),
+            @Mapping( target = "passes", source = "source.requestDTO.passes"),
+            @Mapping( target = "responses", source = "source.responseDTO")
     } )
-    IssPassesRequest toIssPassesRequest(RequestDTO source, List<ResponseDTO> responses);
+    IssPassesRequest toIssPassesRequest(StationPassesRequestDTO source);
 
     @Mappings({
             @Mapping(source = "request.latitude", target = "requestDTO.latitude"),
