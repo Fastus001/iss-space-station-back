@@ -12,8 +12,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import pl.fastus.spacestation.domain.StationNow;
 import pl.fastus.spacestation.domain.dto.*;
+import pl.fastus.spacestation.services.IssApiService;
 import pl.fastus.spacestation.services.IssPassesRequestService;
 import pl.fastus.spacestation.services.StationNowService;
+import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
 
@@ -37,6 +39,9 @@ class IssControllerTest {
     @Mock
     StationNowService stationNowService;
 
+    @Mock
+    IssApiService issApiService;
+
     @InjectMocks
     IssController issController;
 
@@ -44,7 +49,7 @@ class IssControllerTest {
 
     @BeforeEach
     void setUp() {
-        issController = new IssController(  issPassesRequestService, stationNowService);
+        issController = new IssController(  issPassesRequestService, stationNowService, issApiService);
 
         mockMvc = MockMvcBuilders.standaloneSetup( issController ).build();
     }
@@ -63,7 +68,8 @@ class IssControllerTest {
         savedRequest.setMessage("success");
         savedRequest.setRequestDTO(requestDTO);
 
-        given(issPassesRequestService.saveDTO(any(PassesRequestDTO.class))).willReturn(savedRequest);
+        given(issApiService.createPassesRequest(any())).willReturn(Mono.just(savedRequest));
+        given(issPassesRequestService.saveDTO(any(StationPassesRequestDTO.class))).willReturn(savedRequest);
         //when
         mockMvc.perform(post("/api/iss/passTimes")
                 .content(asJsonString(body))
@@ -75,6 +81,7 @@ class IssControllerTest {
 
         //then
         verify(issPassesRequestService, times(1)).saveDTO(any());
+        verify(issApiService, times(1)).createPassesRequest(any());
     }
 
     @Test
@@ -83,8 +90,6 @@ class IssControllerTest {
         PassesRequestDTO body = new PassesRequestDTO();
         body.setLongitude(BigDecimal.ONE);
         body.setLatitude(BigDecimal.valueOf(80.001));
-        body.setNumber(BigDecimal.ONE);
-        body.setAltitude(BigDecimal.ONE);
 
         mockMvc.perform(post("/api/iss/passTimes")
                 .content(asJsonString(body))

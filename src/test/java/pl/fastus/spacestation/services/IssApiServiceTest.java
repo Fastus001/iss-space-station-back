@@ -21,11 +21,11 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class IssApiServiceImplTest {
+class IssApiServiceTest {
 
     public static MockWebServer mockWebServer;
 
-    IssApiServiceImpl service;
+    IssApiService service;
 
     ObjectMapper objectMapper;
 
@@ -43,7 +43,7 @@ class IssApiServiceImplTest {
     @BeforeEach
     void setService(){
         String baseUrl =  String.format( "http://localhost:%s", mockWebServer.getPort() );
-        service = new IssApiServiceImpl(baseUrl);
+        service = new IssApiService(baseUrl);
         objectMapper = new ObjectMapper();
     }
 

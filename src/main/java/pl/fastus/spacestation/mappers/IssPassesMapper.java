@@ -27,6 +27,6 @@ public interface IssPassesMapper {
             @Mapping(source = "request.datetime", target = "requestDTO.dateTime"),
             @Mapping(source = "responses", target = "responseDTO")
     })
-    StationPassesRequestDTO IssPassesRequestToStationPassesRequestDTO(IssPassesRequest request);
+    StationPassesRequestDTO issPassesRequestToStationPassesRequestDTO(IssPassesRequest request);
 
 }
