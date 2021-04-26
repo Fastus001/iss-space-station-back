@@ -1,27 +1,26 @@
 package pl.fastus.spacestation.domain;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
 
-@Data
 @NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode(exclude = "position",callSuper = false)
+@Data
 @Entity
 public class StationNow extends BaseEntity{
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Position position;
-
+    private double latitude;
+    private double longitude;
     private Long timeStamp;
 
     @Builder
-    public StationNow(Long id, Position position, Long timeStamp) {
-        super( id );
-        this.position = position;
+    public StationNow(Long id, double latitude, double longitude, Long timeStamp) {
+        super(id);
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.timeStamp = timeStamp;
     }
 }
+

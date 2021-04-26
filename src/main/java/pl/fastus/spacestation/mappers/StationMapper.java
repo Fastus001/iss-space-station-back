@@ -9,7 +9,8 @@ import pl.fastus.spacestation.domain.dto.StationNowDTO;
 @Mapper(componentModel = "spring")
 public interface StationMapper {
     @Mappings( {
-            @Mapping( target = "position", source = "issPositionDTO"),
+            @Mapping( target = "latitude", source = "issPositionDTO.latitude"),
+            @Mapping( target = "longitude", source = "issPositionDTO.longitude"),
             @Mapping( target = "timeStamp", source = "timestamp")
     } )
     StationNow stationNowDTOtoStationNow(StationNowDTO stationNowDTO);

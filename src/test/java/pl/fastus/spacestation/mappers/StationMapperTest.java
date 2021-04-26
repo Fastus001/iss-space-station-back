@@ -13,8 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class StationMapperTest {
     private static final double LATITUDE = 25.2;
     private static final double LONGITUDE = 12.1;
-    private static final int PASSES = 5;
-    private static final int ALTITUDE = 1500;
     private static final long DAY_TIME = 123456L;
 
     StationMapper mapper;
@@ -38,8 +36,8 @@ class StationMapperTest {
         final StationNow stationNow = mapper.stationNowDTOtoStationNow( stationNowDTO );
 
         assertAll( ()->assertEquals( DAY_TIME, stationNow.getTimeStamp() ),
-                   ()->assertEquals( LONGITUDE, stationNow.getPosition().getLongitude()),
-                   ()->assertEquals( LATITUDE, stationNow.getPosition().getLatitude())
+                   ()->assertEquals( LONGITUDE, stationNow.getLongitude()),
+                   ()->assertEquals( LATITUDE, stationNow.getLatitude())
         );
     }
 }

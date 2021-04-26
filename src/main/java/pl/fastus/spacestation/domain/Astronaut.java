@@ -15,6 +15,7 @@ public class Astronaut {
     @Id
     private String name;
 
+    @Id
     private String craft;
 
     @CreationTimestamp
