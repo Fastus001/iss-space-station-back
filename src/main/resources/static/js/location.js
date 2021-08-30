@@ -3,10 +3,8 @@ var map = L.map('mapid').setView([0,0], 3);
 
 function moveISS () {
     $.getJSON('http://api.open-notify.org/iss-now.json', function(data) {
-        var lat = data['iss_position']['latitude'];
-        var lon = data['iss_position']['longitude'];
-        var timestamp = data['timestamp'];
-        var message = data['message'];
+        const lat = data['iss_position']['latitude'];
+        const lon = data['iss_position']['longitude'];
         postToController(data);
 
         iss.setLatLng([lat, lon]);
